@@ -1,19 +1,31 @@
 {% extends "baser.html" %}
 
 {% block main %}
-    <table>
-        {% for i in range(0,count) %}
+    <table class="product_table">
+        <thead>
             <tr>
-                <td>{{ dictionary['name'][i] }}</td>
-                <td>{{ dictionary['acceleration'][i] }}</td>
-                <td>{{ dictionary['speed'][i] }}</td>
-                <td>{{ dictionary['handling'][i] }}</td>
+                <td><a href="?sortby=name">Name</a></td>
+                <td><a href="?sortby=acceleration">Acceleration</a></td>
+                <td><a href="?sortby=speed">Speed</a></td>
+                <td><a href="?sortby=handling">Handling</a></td>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for row in database %}
+            <tr>
+                <td>{{ row['name'] }}</td>
+                <td class="product_parameter">
+                    <span style="width:{{row['acceleration']}}%">{{row['acceleration']}}%</span>
+                </td>
+                <td class="product_parameter">
+                    <span style="width:{{row['speed']}}%">{{row['speed']}}%</span>
+                </td>
+                <td class="product_parameter">
+                    <span style="width:{{row['handling']}}%">{{row['handling']}}%</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <div><p>{{ content }}</p></div>
-{% endblock %}
-
-{% block footer %}
-<div><p>This app was created by <a href="http://stoked.cz">Matyáš Skalický</a> in 2018</p></div>
 {% endblock %}

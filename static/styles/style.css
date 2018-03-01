@@ -20,10 +20,6 @@
 	display: block;
 }
 
-.header, .main {
-	
-}
-
 .header {
 
 }
@@ -48,29 +44,18 @@ p {
 	clear: both;
 }
 
-h1, img {
-	text-align:left;
-	float:left;
+.product_table {
+	width: 100%;
 }
 
-select, input, button {
-    border-width: 0px;
+.product_parameter {
+	width: 200px;
+	padding: 0;
 }
 
-#search_wrapper {
-
-}
-
-#search_button {
-    float: right;
-}
-
-#search_bar_wrapper {
-    overflow: hidden;
-    padding-right: 2em;
-}
-
-#search_bar {
-    width: 100%;
-    padding-right: 10px;
+.product_parameter span {
+	display: inline-block;
+	height: 100%;
+	background-color:pink;
+	padding: 2px;
 }
