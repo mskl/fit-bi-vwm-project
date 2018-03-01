@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title>Untitled</title>
+    {% endif %}
+</head>
+
+<body>
+	<span class="wholeweb">
+    	<span class="header">
+            {% block header %}
+                <p><h1>Need for Speed: Most Wanted 2 - Car Search</h1></p>
+                <div class="line"></div>
+                <p>
+                    <a href="/">Home</a>
+                    <a href="#">Random</a>
+                    <a href="#">Progress</a>
+                    <a href="#">About</a>
+                </p>
+                <div class="line"></div>
+            {% endblock %}
+		</span>
+        <span class="main">
+            {% block main %}
+                The default main block.
+            {% endblock %}
+        </span>
+        <span class="footer">
+        	{% block footer %}
+                The default footer block.
+            {% endblock %}
+        </span>
+    </span>
+</body>
+</html>

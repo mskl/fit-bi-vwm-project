@@ -1,0 +1,19 @@
+{% extends "baser.html" %}
+
+{% block main %}
+    <table>
+        {% for i in range(0,count) %}
+            <tr>
+                <td>{{ dictionary['name'][i] }}</td>
+                <td>{{ dictionary['acceleration'][i] }}</td>
+                <td>{{ dictionary['speed'][i] }}</td>
+                <td>{{ dictionary['handling'][i] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div><p>{{ content }}</p></div>
+{% endblock %}
+
+{% block footer %}
+<div><p>This app was created by <a href="http://stoked.cz">Matyáš Skalický</a> in 2018</p></div>
+{% endblock %}
