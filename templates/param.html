@@ -1,0 +1,23 @@
+{% extends "baser.html" %}
+
+{% block main %}
+    <table class="product_table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Param</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td class="product_parameter">
+                    <span style="width:{{row[1]}}%">{{row[1]}}%</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div><p>{{ content }}</p></div>
+{% endblock %}
