@@ -4,7 +4,7 @@
     <table class="product_table">
         <thead>
             <tr>
-                <td><a href="?sortby=name">Name</a></td>
+                <td>Name</td>
                 <td><a href="?sortby=acceleration">Acceleration</a></td>
                 <td><a href="?sortby=speed">Speed</a></td>
                 <td><a href="?sortby=handling">Handling</a></td>
@@ -15,13 +15,13 @@
             <tr>
                 <td>{{ row[0].name }}</td>
                 <td class="product_parameter">
-                    <span style="width:{{row[0].acceleration%">{{row[0].acceleration}}%</span>
+                    <span style="width:{{ row[0].acceleration }}%">{{ row[0].acceleration }}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{row[0].speed}}%">{{row[0].speed}}%</span>
+                    <span style="width:{{ row[0].speed }}%">{{ row[0].speed }}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{row[0].handling}}%">{{row[0].handling}}%</span>
+                    <span style="width:{{ row[0].handling }}%">{{ row[0].handling }}%</span>
                 </td>
             </tr>
             {% endfor %}

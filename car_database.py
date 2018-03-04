@@ -13,7 +13,7 @@ class CarDatabase:
     __car_handl = {}
 
     # The tuple containing all info
-    all_cars = []
+    # all_cars = []
 
     def __init__(self, csv_path):
         self.parse_csv_classes(csv_path)
@@ -38,7 +38,7 @@ class CarDatabase:
                     c = Automobile(name, acceleration, speed, handling)
                     # Add the cars
                     self.__cars.append(c)
-                    self.all_cars.append(r)
+                    # self.all_cars.append(r)
                     self.__car_accel.update({c: acceleration})
                     self.__car_handl.update({c: handling})
                     self.__car_speed.update({c: speed})
@@ -46,13 +46,13 @@ class CarDatabase:
                     print(e)
 
     @staticmethod
-    def sort_by_param(d):
-        return sorted(d.items(), key=lambda x: x[ 1 ])
+    def sort_by_param(d, reversed):
+        return sorted(d.items(), key=lambda x: x[ 1 ], reverse=reversed)
 
     def sort_all(self):
-        self.__car_accel = self.sort_by_param(self.__car_accel)
-        self.__car_speed = self.sort_by_param(self.__car_speed)
-        self.__car_handl = self.sort_by_param(self.__car_handl)
+        self.__car_accel = self.sort_by_param(self.__car_accel, True)
+        self.__car_speed = self.sort_by_param(self.__car_speed, True)
+        self.__car_handl = self.sort_by_param(self.__car_handl, True)
 
     def get_car_instances(self):
         return self.__cars

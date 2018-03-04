@@ -20,38 +20,36 @@ def index():
     if request.method == "GET":
         sort_parameter = request.args.get('sortby')
 
-    # cars_db = car_database.all_cars
-
-    # if sort_parameter == "name":
-    #     cars_db.sort(key=operator.itemgetter('name'), reverse=False)
-    #if sort_parameter == "acceleration":
-    #    return render_template("index.html", title='Index', database=car_database.get_accel())
-    #elif sort_parameter == "speed":
-    #    return render_template("index.html", title='Index', database=car_database.get_speed())
-    #elif sort_parameter == "handling":
-    #    return render_template("index.html", title='Index', database=car_database.get_handl())
-    #    # cars_db.sort(key=operator.itemgetter('handling'), reverse=True)
+    if sort_parameter == "name":
+        return render_template("index.html", title='Index', database=car_database.get_car_instances())
+    elif sort_parameter == "acceleration":
+        return render_template("index.html", title='Index', database=car_database.get_accel())
+    elif sort_parameter == "speed":
+        return render_template("index.html", title='Index', database=car_database.get_speed())
+    elif sort_parameter == "handling":
+        return render_template("index.html", title='Index', database=car_database.get_handl())
+        # cars_db.sort(key=operator.itemgetter('handling'), reverse=True)
 
     return render_template("index.html", title='Index', database=car_database.get_accel())
 
 
-# @app.route('/about')
-# def about():
-#     return render_template("about.html", title='About')
+@app.route('/about')
+def about():
+    return render_template("about.html", title='About')
 
 
-# @app.route('/param', methods=['GET'])
-# def param():
-#     sort_parameter = ""
-#     if request.method == "GET":
-#         sort_parameter = request.args.get('single')
-#
-#     if sort_parameter == "accel":
-#         return render_template("param.html", title='Acceleration', data=car_database.get_accel())
-#     elif sort_parameter == "speed":
-#         return render_template("param.html", title='Speed', data=car_database.get_speed())
-#     elif sort_parameter == "handl":
-#         return render_template("param.html", title='Handling', data=car_database.get_handl())
+@app.route('/param', methods=['GET'])
+def param():
+    sort_parameter = ""
+    if request.method == "GET":
+        sort_parameter = request.args.get('single')
+
+    if sort_parameter == "accel":
+        return render_template("param.html", title='Acceleration', data=car_database.get_accel())
+    elif sort_parameter == "speed":
+        return render_template("param.html", title='Speed', data=car_database.get_speed())
+    elif sort_parameter == "handl":
+        return render_template("param.html", title='Handling', data=car_database.get_handl())
 
 
 
