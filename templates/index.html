@@ -13,15 +13,15 @@
         <tbody>
             {% for row in database %}
             <tr>
-                <td>{{ row['name'] }}</td>
+                <td>{{ row[0].name }}</td>
                 <td class="product_parameter">
-                    <span style="width:{{row['acceleration']}}%">{{row['acceleration']}}%</span>
+                    <span style="width:{{row[0].acceleration%">{{row[0].acceleration}}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{row['speed']}}%">{{row['speed']}}%</span>
+                    <span style="width:{{row[0].speed}}%">{{row[0].speed}}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{row['handling']}}%">{{row['handling']}}%</span>
+                    <span style="width:{{row[0].handling}}%">{{row[0].handling}}%</span>
                 </td>
             </tr>
             {% endfor %}

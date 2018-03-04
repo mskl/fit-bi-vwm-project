@@ -1,8 +1,8 @@
-class Car:
-    name = ""
+class Automobile:
     acceleration = 0
     speed = 0
     handling = 0
+    name = ""
 
     def __init__(self, __name, __acceleration, __speed, __handling):
         self.name = __name
