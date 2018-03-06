@@ -1,0 +1,50 @@
+{% extends "baser.html" %}
+
+{% block main %}
+    <table class="product_table">
+        <thead>
+            <tr>
+                <form action="/" method="get">
+                    <td>
+                        <select name="agregate" onchange="this.form.submit()">
+                            <option value="sum" {% if agregate == "sum" %}selected{% endif %}>sum</option>
+                            <option value="max" {% if agregate == "max" %}selected{% endif %}>max</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="sort" value="accel" onchange="this.form.submit()"
+                               {% if checkdict['accel'] == True %}checked{% endif %}>
+                        Acceleration
+                    </td>
+                    <td>
+                        <input type="checkbox" name="sort" value="speed" onchange="this.form.submit()"
+                               {% if checkdict['speed'] == True %}checked{% endif %}>
+                        Speed
+                    </td>
+                    <td>
+                        <input type="checkbox" name="sort" value="handl" onchange="this.form.submit()"
+                               {% if checkdict['handl'] == True %}checked{% endif %}>
+                        Handling
+                    </td>
+                </form>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in database %}
+            <tr>
+                <td>{{ row[0].name }}</td>
+                <td class="product_parameter">
+                    <span style="width:{{ row[0].accel }}%">{{ row[0].accel }}%</span>
+                </td>
+                <td class="product_parameter">
+                    <span style="width:{{ row[0].speed }}%">{{ row[0].speed }}%</span>
+                </td>
+                <td class="product_parameter">
+                    <span style="width:{{ row[0].handl }}%">{{ row[0].handl }}%</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div><p>{{ content }}</p></div>
+{% endblock %}

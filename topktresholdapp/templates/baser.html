@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
         {% if title %}
-            <title>{{title}}</title>
+            <title>{{ title }}</title>
         {% else %}
             <title>Untitled</title>
         {% endif %}
@@ -14,26 +14,27 @@
         <span class="wholeweb">
             <span class="header">
                 {% block header %}
-                    <p><h1>Need for Speed: Most Wanted 2 - Pimp My Car</h1></p>
+                    <p><h1>Need for Speed: Most Wanted 2 - Car Search</h1></p>
                     <div class="line"></div>
                     <p>
-                        <a href="/">Home</a>
-                        <a href="/about">About</a>
-                        //
-                        <a href="/param?single=accel">Accel</a>
-                        <a href="/param?single=speed">Speed</a>
-                        <a href="/param?single=handl">Handling</a>
+                        <b>
+                            <a href="/">Home</a>
+                            <a href="/about">About</a>
+                        </b>
                     </p>
                     <div class="line"></div>
                 {% endblock %}
             </span>
+
             <span class="main">
                 {% block main %}
                     The default main block.
                 {% endblock %}
             </span>
+
             <span class="footer">
                 {% block footer %}
+                    <div class="line"></div>
                     <div><p>This app was created by <a href="http://www.stoked.cz/">Matyáš Skalický</a> in 2018</p></div>
                 {% endblock %}
             </span>

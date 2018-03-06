@@ -47,9 +47,16 @@ p {
 .product_table {
 	width: 100%;
 }
+.product_table thead tr td {
+	padding: 10px;
+	background-color: darkseagreen;
+}
 
+.product_table tbody tr td {
+	background-color: #f3f9fa;
+}
 .product_parameter {
-	width: 200px;
+	width: 20%;
 	padding: 0;
 }
 
