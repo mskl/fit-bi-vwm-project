@@ -21,31 +21,33 @@ def index():
     sort_checkbox = False, False, False
     sort_agregate = "sum"
     if request.method == "GET":
+        # Values of checkboxes
         sort_checkbox = request.args.getlist('sort')
+        # The sorting function
         sort_agregate = request.args.get('agregate')
 
     a, s, h = ash_from_post_list(sort_checkbox)
-    checkdict = {'accel':a, 'speed':s, 'handl':h}
+    checkbox_dict = {'accel':a, 'speed':s, 'handl':h}
 
-    #if sort_agregate == "sum":
-    #    db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_sum)
-    #    return render_template("index.html",
-    #                           title='Index - naive sum',
-    #                           database=db,
-    #                           checkdict=checkdict,
-    #                           agregate=sort_agregate)
-    #elif sort_agregate == "max":
-    #    db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_max)
-    #    return render_template("index.html",
-    #                           title='Index - naive max',
-    #                           database=db,
-    #                           checkdict=checkdict,
-    #                           agregate=sort_agregate)
-
-    return render_template("index.html",
-                           title='Index - by name',
-                           database=car_database.get_names(),
-                           checkdict=checkdict)
+    if sort_agregate == "sum":
+        db = car_database.naive_rank_sort(a, s, h, agregate_sum_func)
+        return render_template("index.html",
+                               title='Index - naive sum',
+                               database=db,
+                               checkdict=checkbox_dict,
+                               agregate=sort_agregate)
+    elif sort_agregate == "max":
+        db = car_database.naive_rank_sort(a, s, h, agregate_max_func)
+        return render_template("index.html",
+                               title='Index - max',
+                               database=db,
+                               checkdict=checkbox_dict,
+                               agregate=sort_agregate)
+    else:
+        return render_template("index.html",
+                               title='Index - name',
+                               database=car_database.get_names(),
+                               checkdict=checkbox_dict)
 
 
 @app.route('/about')

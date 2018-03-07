@@ -30,17 +30,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for row in database %}
+            {% for car in database %}
             <tr>
-                <td>{{ row[0].name }}</td>
+                <td>{{ car.key().get_name_value() }}</td>
                 <td class="product_parameter">
-                    <span style="width:{{ row[0].accel }}%">{{ row[0].accel }}%</span>
+                    <span style="width:{{ car.key().get_accel_value() }}%">{{ car.key().get_accel_value() }}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{ row[0].speed }}%">{{ row[0].speed }}%</span>
+                    <span style="width:{{ car.key().get_speed_value() }}%">{{ car.key().get_speed_value() }}%</span>
                 </td>
                 <td class="product_parameter">
-                    <span style="width:{{ row[0].handl }}%">{{ row[0].handl }}%</span>
+                    <span style="width:{{ car.key().get_handl_value() }}%">{{ car.key().get_handl_value() }}%</span>
                 </td>
             </tr>
             {% endfor %}

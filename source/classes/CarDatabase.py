@@ -71,34 +71,14 @@ class CarDatabase:
     def get_handl(self):
         return self.__car_handl
 
-    @staticmethod
-    def agregate_sum(car, a, s, h):
-        sum = 0
-        if a is True:
-            sum += car.accel
-        if s is True:
-            sum += car.speed
-        if h is True:
-            sum += car.handl
-        return sum
-
-    @staticmethod
-    def agregate_max(car, a, s, h):
-        m = 0
-        if a is True:
-            m = max(m, car.accel)
-        if s is True:
-            m = max(m, car.speed)
-        if h is True:
-            m = max(m, car.handl)
-        return m
-
-    #def naive_rank_sort(self, a, s, h, agregate_func):
-    #    # Create a new array with agregate values
-    #    agregate = {}
-    #    for car in self.__cars:
-    #        agregate.update({car: agregate_func(car, a, s, h)})
-    #    return self.sort_by_param(agregate, True)
+    def naive_rank_sort(self, a, s, h, agregate_func):
+        # Create a new array with agregate values
+        agregated = []
+        for car in self.__cars:
+            tuple = MutableTuple(car, agregate_func(car, a, s, h))
+            agregated.append(tuple)
+        agregated.sort(reverse=True)
+        return agregated
 #
     #def topk_agregate_sum(self, car, a, s, h):
     #    sum = 0
