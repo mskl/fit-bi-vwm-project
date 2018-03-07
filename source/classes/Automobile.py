@@ -10,6 +10,11 @@ class Automobile:
         self.speed = _speed
         self.handl = _handl
 
-    @property
+    def __eq__(self, another):
+        return self.accel == another.accel and self.speed == another.speed and self.handl == another.handl and self.name == another.name
+
+    def __hash__(self):
+        return hash(self.name + str(self.accel)+ str(self.speed) + str(self.handl))
+
     def __str__(self):
         return self.name + " - " + str(self.accel) + " " + str(self.speed) + " " + str(self.handl)

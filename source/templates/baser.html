@@ -9,15 +9,14 @@
             <title>Untitled</title>
         {% endif %}
     </head>
-
     <body>
-        <span class="wholeweb">
-            <span class="header">
+        <div id="wholeweb">
+            <!-- HEADER ----------------------------------------------------------------------------------------------->
+            <div id="header">
                 {% block header %}
                     <div id="headertext">
                         <h1>Need for Speed: Most Wanted 2 Top(K) Treshold Car Selector</h1>
                     </div>
-                    <div class="line"></div>
                     <div id="navbar">
                         <span class="navbarbutton">
                             <a href="/">Home</a>
@@ -29,22 +28,22 @@
                             <a href="/about">About</a>
                         </span>
                     </div>
-                    <div class="line"></div>
                 {% endblock %}
-            </span>
-
-            <span class="main">
+            </div>
+            <!-- MAIN ------------------------------------------------------------------------------------------------->
+            <div id="main">
                 {% block main %}
                     The default main block.
                 {% endblock %}
-            </span>
-
-            <span class="footer">
+            </div>
+            <!-- FOOTER ----------------------------------------------------------------------------------------------->
+            <div id="footer">
                 {% block footer %}
-                    <div class="line"></div>
-                    <div><p>This app was created by <a href="http://www.stoked.cz/">Matyáš Skalický</a> in 2018</p></div>
+                    <p>
+                        This app was created by <a href="http://www.stoked.cz/">Matyáš Skalický</a> in 2018
+                    </p>
                 {% endblock %}
-            </span>
-        </span>
+            </div>
+        </div>
     </body>
 </html>

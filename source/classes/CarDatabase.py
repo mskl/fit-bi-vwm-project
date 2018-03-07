@@ -16,6 +16,10 @@ class CarDatabase:
     def __init__(self, csv_path):
         self.parse_csv_classes(csv_path)
         self.sort_all_arrays()
+        # self.test(csv_path)
+        some_car = self.get_car_instances()[ 0 ]
+        ret = self.get_names()[ some_car ]
+        print(ret)
 
     def parse_csv_classes(self, csv_path):
         with open(csv_path) as csvfile:
@@ -95,3 +99,25 @@ class CarDatabase:
         for car in self.__cars:
             agregate.update({car:agregate_func(car, a, s, h)})
         return self.sort_by_param(agregate, True)
+
+    def topk_agregate_sum(self, car, a, s, h):
+        sum = 0
+        if a is True:
+            sum += self.__car_accel[car][0]
+        if s is True:
+            sum += self.__car_speed[car][0]
+        if h is True:
+            sum += self.__car_handl[car][0]
+        return sum
+
+    # 1. Compute overall score for every object by looking into each sorted list.
+    # 2. Return k objects with the highest overall score.
+    def naive_k(self, a, s, h, agregate_func, k):
+        results_work = {}
+        for c in self.__cars:
+            res = self.topk_agregate_sum(c, a, s, h)
+            results_work.update({c:res})
+        return results_work
+
+if __name__ == "__main__":
+    car_db = CarDatabase("../data/nsfmw2/cars_short.csv")

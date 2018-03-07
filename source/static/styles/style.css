@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-.wholeweb {
+#wholeweb {
 	margin: 0 auto;	
 	background-color: #FFF;
 	display: block;
@@ -14,22 +14,24 @@
 	padding: 30px;
 }
 
-.header, .main, .footer {
+#header, #main, #footer {
 	clear: both;
 	text-align: left;
 	display: block;
 }
 
-.header {
+#header {
 	text-align: center;
+	padding-bottom: 0.5em;
 }
 
-.main {
-
+#main {
+	border: 5px black;
 }
 
-.footer {
+#footer {
 	color: #999;
+	border-top: 1px solid #CCCCCC;
 }
 
 #headertext {
@@ -40,7 +42,9 @@
 	text-align: left;
 	display: block;
 	font-size: large;
-	padding: 3px;
+	padding: 0.6em;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 .navbarbutton {
@@ -67,8 +71,15 @@ p {
 
 .product_table {
 	width: 100%;
+	border-collapse:collapse;
 }
-.product_table thead tr td {
+
+.product_table td {
+	border-bottom: 1px solid white;
+    border-top: 1px solid white;
+}
+
+.product_table thead td {
 	padding: 10px;
 	background-color: rgba(255, 105, 180, 0.4);
 }
