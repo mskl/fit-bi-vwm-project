@@ -1,5 +1,5 @@
 import csv
-from topktresholdapp.classes.Automobile import Automobile
+from source.classes.Automobile import Automobile
 
 # The keys that are used to map the variables from the csv file
 keys = ["name","acceleration","speed","handling"]

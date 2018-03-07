@@ -1,4 +1,4 @@
-from topktresholdapp.topktreshold import app
+from source.topktreshold import app
 
 if __name__ == "__main__":
     app.run()

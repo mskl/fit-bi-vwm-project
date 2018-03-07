@@ -21,7 +21,7 @@
 }
 
 .header {
-
+	text-align: center;
 }
 
 .main {
@@ -32,10 +32,31 @@
 	color: #999;
 }
 
+#headertext {
+
+}
+
+#navbar {
+	text-align: left;
+	display: block;
+	font-size: large;
+	padding: 3px;
+}
+
+.navbarbutton {
+	display: inline-block;
+	padding: 0 5px 0 5px;
+}
+
+#navbar a {
+	text-decoration:none;
+}
+
+
 .line {
 	border-bottom: 1px dotted #CCCCCC;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	display: block;
 }
 
@@ -49,12 +70,17 @@ p {
 }
 .product_table thead tr td {
 	padding: 10px;
-	background-color: darkseagreen;
+	background-color: rgba(255, 105, 180, 0.4);
 }
 
-.product_table tbody tr td {
-	background-color: #f3f9fa;
+.product_table tbody tr:nth-child(odd) {
+	background: #FFF;
 }
+
+.product_table tbody tr:nth-child(even) {
+	background: #eeeeee;
+}
+
 .product_parameter {
 	width: 20%;
 	padding: 0;
@@ -63,6 +89,6 @@ p {
 .product_parameter span {
 	display: inline-block;
 	height: 100%;
-	background-color:pink;
+	background-color: rgba(157, 255, 42, 0.4);
 	padding: 2px;
 }
