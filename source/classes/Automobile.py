@@ -1,20 +1,30 @@
 class Automobile:
-    accel = 0
-    speed = 0
-    handl = 0
-    name = ""
+    def __init__(self):
+        self.name = None
+        self.accel = None
+        self.speed = None
+        self.handl = None
 
-    def __init__(self, _name, _accel, _speed, _handl):
+    def assign(self, _name, _accel, _speed, _handl):
         self.name = _name
         self.accel = _accel
         self.speed = _speed
         self.handl = _handl
 
-    def __eq__(self, another):
-        return self.accel == another.accel and self.speed == another.speed and self.handl == another.handl and self.name == another.name
+    def get_name_value(self):
+        return self.name.value()
 
-    def __hash__(self):
-        return hash(self.name + str(self.accel)+ str(self.speed) + str(self.handl))
+    def get_accel_value(self):
+        return self.accel.value()
+
+    def get_speed_value(self):
+        return self.speed.value()
+
+    def get_handl_value(self):
+        return self.handl.value()
 
     def __str__(self):
-        return self.name + " - " + str(self.accel) + " " + str(self.speed) + " " + str(self.handl)
+        return str(self.get_name_value()) \
+               + " - " + str(self.get_accel_value()) \
+               + " " + str(self.get_speed_value()) \
+               + " " + str(self.get_handl_value())

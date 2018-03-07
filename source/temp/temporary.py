@@ -44,3 +44,10 @@
 '''
 
 # <!-- <input type="submit" value="Sort by parameters"> -->
+
+    #def __eq__(self, another):
+    #    return self.accel == another.accel and self.speed == another.speed and self.handl == another.handl and self.name == another.name
+
+    #def __hash__(self):
+    #    return hash(self.name + str(self.accel)+ str(self.speed) + str(self.handl))
+#

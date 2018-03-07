@@ -27,21 +27,20 @@ def index():
     a, s, h = ash_from_post_list(sort_checkbox)
     checkdict = {'accel':a, 'speed':s, 'handl':h}
 
-
-    if sort_agregate == "sum":
-        db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_sum)
-        return render_template("index.html",
-                               title='Index - naive sum',
-                               database=db,
-                               checkdict=checkdict,
-                               agregate=sort_agregate)
-    elif sort_agregate == "max":
-        db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_max)
-        return render_template("index.html",
-                               title='Index - naive max',
-                               database=db,
-                               checkdict=checkdict,
-                               agregate=sort_agregate)
+    #if sort_agregate == "sum":
+    #    db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_sum)
+    #    return render_template("index.html",
+    #                           title='Index - naive sum',
+    #                           database=db,
+    #                           checkdict=checkdict,
+    #                           agregate=sort_agregate)
+    #elif sort_agregate == "max":
+    #    db = car_database.naive_rank_sort(a, s, h, CarDatabase.agregate_max)
+    #    return render_template("index.html",
+    #                           title='Index - naive max',
+    #                           database=db,
+    #                           checkdict=checkdict,
+    #                           agregate=sort_agregate)
 
     return render_template("index.html",
                            title='Index - by name',
