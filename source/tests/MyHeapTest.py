@@ -1,7 +1,6 @@
 from source.classes.MyHeap import MyHeap
 import unittest
 
-
 class MyHeapTest(unittest.TestCase):
     def test_basic(self):
         h = MyHeap(3)
