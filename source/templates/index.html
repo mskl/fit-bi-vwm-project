@@ -6,23 +6,26 @@
             <tr>
                 <form action="/" method="get">
                     <td>
-                        <select name="agregate" onchange="this.form.submit()">
+                        <select name="agregate">
                             <option value="sum" {% if agregate == "sum" %}selected{% endif %}>sum</option>
                             <option value="max" {% if agregate == "max" %}selected{% endif %}>max</option>
+                            <option value="naivek" {% if agregate == "naivek" %}selected{% endif %}>naivek</option>
                         </select>
+                        <input type="number" name="quantity" min="3" max="10" value="{{ quantity or 3 }}">
+                        <input type="submit" value="Sort by parameters">
                     </td>
                     <td>
-                        <input type="checkbox" name="sort" value="accel" onchange="this.form.submit()"
+                        <input type="checkbox" name="sort" value="accel"
                                {% if checkdict['accel'] == True %}checked{% endif %}>
                         Acceleration
                     </td>
                     <td>
-                        <input type="checkbox" name="sort" value="speed" onchange="this.form.submit()"
+                        <input type="checkbox" name="sort" value="speed"
                                {% if checkdict['speed'] == True %}checked{% endif %}>
                         Speed
                     </td>
                     <td>
-                        <input type="checkbox" name="sort" value="handl" onchange="this.form.submit()"
+                        <input type="checkbox" name="sort" value="handl"
                                {% if checkdict['handl'] == True %}checked{% endif %}>
                         Handling
                     </td>
@@ -46,5 +49,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <div><p>{{ content }}</p></div>
+    <div><p>The query took {{ querytime }} seconds.</p></div>
 {% endblock %}

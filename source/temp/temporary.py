@@ -51,3 +51,5 @@
     #def __hash__(self):
     #    return hash(self.name + str(self.accel)+ str(self.speed) + str(self.handl))
 #
+
+# {% if autosubmit %}onchange="this.form.submit()"{% endif %}

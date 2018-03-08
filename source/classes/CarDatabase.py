@@ -1,6 +1,8 @@
 import csv
+import heapq as heap
 from source.classes.Automobile import Automobile
 from source.classes.MutableTuple import MutableTuple
+from source.algorithms import agregate_sum_func
 
 # The keys that are used to map the variables from the csv file
 keys = ["name","acceleration","speed","handling"]
@@ -25,20 +27,13 @@ class CarDatabase:
             read_csv = csv.reader(csv_file, delimiter=';')
             for row in read_csv:
                 try:
-                    # Zip the keys and values from the CSV reader
-                    r = dict(zip(keys, row))
-                    # Convert the values to the integral types
-                    name = r['name']
-                    handl = int(r['handling'])
-                    accel = int(r['acceleration'])
-                    speed = int(r['speed'])
                     # Create a new empty car
                     car = Automobile()
                     # Create a tuple for each atribute
-                    name_tuple = MutableTuple(car, name)
-                    accel_tuple = MutableTuple(car, accel)
-                    speed_tuple = MutableTuple(car, speed)
-                    handl_tuple = MutableTuple(car, handl)
+                    name_tuple = MutableTuple(car, row[0])
+                    accel_tuple = MutableTuple(car, int(row[1]))
+                    speed_tuple = MutableTuple(car, int(row[2]))
+                    handl_tuple = MutableTuple(car, int(row[3]))
                     # Assign the tuples to the car
                     car.assign(name_tuple, accel_tuple, speed_tuple, handl_tuple)
                     # Add the individual lists
@@ -79,25 +74,49 @@ class CarDatabase:
             agregated.append(tuple)
         agregated.sort(reverse=True)
         return agregated
-#
-    #def topk_agregate_sum(self, car, a, s, h):
-    #    sum = 0
-    #    if a is True:
-    #        sum += self.__car_accel[ car ][ 0 ]
-    #    if s is True:
-    #        sum += self.__car_speed[ car ][ 0 ]
-    #    if h is True:
-    #        sum += self.__car_handl[ car ][ 0 ]
-    #    return sum
-#
-    ## 1. Compute overall score for every object by looking into each sorted list.
-    ## 2. Return k objects with the highest overall score.
-    #def naive_k(self, a, s, h, agregate_func, k):
-    #    results_work = {}
-    #    for c in self.__cars:
-    #        res = self.topk_agregate_sum(c, a, s, h)
-    #        results_work.update({c: res})
-    #    return results_work
 
-if __name__ == "__main__":
-    car_db = CarDatabase2("../data/nsfmw2/cars_short.csv")
+    # 1. Compute overall score for every object by looking into each sorted list.
+    # 2. Return k objects with the highest overall score.
+    def naive_k(self, a, s, h, agregate_func, k):
+        results = []
+        for car in self.__cars:
+            results.append(MutableTuple(car, agregate_func(car, a, s, h)))
+        results.sort(reverse=True)
+        return results[:k]
+
+    # 1. Set the threshold t to be the aggregate of the scores seen in this access.
+    # 2. Do random accesses and compute the scores of the seen objects.
+    # 3. Maintain a list of top-k objects seen so far
+    # 4. Stop, when the scores of the top-k are greater or equal to the threshold.
+    # e. Return the top-k seen so far
+    def top_k_treshold(self, a, s, h, agregate_func, k):
+        results = []
+        seen = set()
+
+        for i in range(0, len(self.__cars)):
+            # Stop if I found enough
+            if len(results) > k:
+                break
+            # Get the row
+            first_accel = self.__car_accel[i]
+            first_speed = self.__car_speed[i]
+            first_handl = self.__car_handl[i]
+            # Set treshold
+            treshold = first_accel.value() + first_speed.value() + first_handl.value()
+            # Compute score of seen objects
+            if not seen.__contains__(first_accel):
+                fa = agregate_func(first_accel, a, s, h)
+                heap.heappush(results, (-fa, first_accel))
+                seen.add(first_accel)
+            if not seen.__contains__(first_speed):
+                fs = agregate_func(first_speed, a, s, h)
+                heap.heappush(results, (-fs, first_speed))
+                seen.add(first_speed)
+            if not seen.__contains__(first_handl):
+                fh = agregate_func(first_handl, a, s, h)
+                heap.heappush(results, (-fh, first_handl))
+                seen.add(first_handl)
+
+
+
+        return results
