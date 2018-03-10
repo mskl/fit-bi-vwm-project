@@ -2,7 +2,7 @@ from flask import request
 
 
 # Process the GET parameters
-def process_get():
+def process_get_parameters():
     # The default values for the variables returned
     sort_checkbox = False, False, False
     sort_agregate = "sum"

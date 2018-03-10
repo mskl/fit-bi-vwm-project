@@ -21,7 +21,7 @@ car_database = CarDatabase(CSV_PATH)
 def index():
     # Get the processed GET parameters and settings
     # dict         string         string          function       int
-    checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity = process_get()
+    checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity = process_get_parameters()
 
     print(sort_algorithm)
 
