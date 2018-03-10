@@ -9,7 +9,10 @@
                         <select name="agregate">
                             <option value="sum" {% if agregate == "sum" %}selected{% endif %}>sum</option>
                             <option value="max" {% if agregate == "max" %}selected{% endif %}>max</option>
-                            <option value="naivek" {% if agregate == "naivek" %}selected{% endif %}>naivek</option>
+                        </select>
+                        <select name="algorithm">
+                            <option value="treshold" {% if agregate == "treshold" %}selected{% endif %}>treshold</option>
+                            <option value="naive" {% if agregate == "naive" %}selected{% endif %}>naive</option>
                         </select>
                         <input type="number" name="quantity" min="3" max="10" value="{{ quantity or 3 }}">
                         <input type="submit" value="Sort by parameters">

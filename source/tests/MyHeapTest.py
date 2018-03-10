@@ -20,10 +20,21 @@ class MyHeapTest(unittest.TestCase):
         h.add_element(70)
         h.add_element(80)
         h.add_element(65)
-        self.assertEquals(h.get_sorted_elements(), [(80, None), (70, None), (65, None)])
+        self.assertEqual(h.get_sorted_elements(), [(80, None), (70, None), (65, None)])
 
+    def test_ret_treshold(self):
+        h = MyHeap(3)
+        h.set_treshold(100)
+        h.add_element(70)
+        h.add_element(80)
+        h.add_element(65)
+        self.assertEqual(h.set_treshold(50), True)
+
+
+def run_test():
+    suite = unittest.TestLoader().loadTestsFromTestCase(MyHeapTest)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 
 # Run all the testing if ran from this file
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(MyHeapTest)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    run_test()

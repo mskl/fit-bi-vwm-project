@@ -3,6 +3,7 @@ import heapq as heap
 from source.classes.Automobile import Automobile
 from source.classes.MutableTuple import MutableTuple
 from source.algorithms import agregate_sum_func
+from source.classes.MyHeap import MyHeap
 
 # The keys that are used to map the variables from the csv file
 keys = ["name","acceleration","speed","handling"]
@@ -90,33 +91,29 @@ class CarDatabase:
     # 4. Stop, when the scores of the top-k are greater or equal to the threshold.
     # e. Return the top-k seen so far
     def top_k_treshold(self, a, s, h, agregate_func, k):
-        results = []
+        my_heap = MyHeap(k)
         seen = set()
 
         for i in range(0, len(self.__cars)):
-            # Stop if I found enough
-            if len(results) > k:
-                break
             # Get the row
             first_accel = self.__car_accel[i]
             first_speed = self.__car_speed[i]
             first_handl = self.__car_handl[i]
             # Set treshold
             treshold = first_accel.value() + first_speed.value() + first_handl.value()
+            # Check if I found the target
+            if not my_heap.set_treshold(treshold):
+                break
             # Compute score of seen objects
             if not seen.__contains__(first_accel):
-                fa = agregate_func(first_accel, a, s, h)
-                heap.heappush(results, (-fa, first_accel))
                 seen.add(first_accel)
+                fa = agregate_func(first_accel, a, s, h)
+                my_heap.add_element(fa, first_accel)
             if not seen.__contains__(first_speed):
-                fs = agregate_func(first_speed, a, s, h)
-                heap.heappush(results, (-fs, first_speed))
                 seen.add(first_speed)
+                fs = agregate_func(first_speed, a, s, h)
+                my_heap.add_element(fs, first_speed)
             if not seen.__contains__(first_handl):
-                fh = agregate_func(first_handl, a, s, h)
-                heap.heappush(results, (-fh, first_handl))
                 seen.add(first_handl)
-
-
-
-        return results
+                fh = agregate_func(first_handl, a, s, h)
+                my_heap.add_element(fh, first_handl)
