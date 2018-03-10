@@ -1,30 +1,59 @@
-# Extracts Accel, Speed, Handling from list and return bool tuple
-def ash_from_post_list(lst):
-    a = "accel" in lst
-    s = "speed" in lst
-    h = "handl" in lst
-    return a, s, h
+from flask import request
+
+
+# Process the GET parameters
+def process_get():
+    # The default values for the variables returned
+    sort_checkbox = False, False, False
+    sort_agregate = "sum"
+    sort_algorithm = "naive"
+    agregate_func = agregate_sum_func
+    sort_quantity = 3
+
+    # Obtain the GET parameters
+    if request.method == "GET":
+        # Values of checkboxes
+        sort_checkbox = request.args.getlist('sort')
+        # The sorting function
+        sort_agregate = request.args.get('agregate')
+        # The algorithm to get the top-k
+        sort_algorithm = request.args.get('algorithm')
+        # The treshold quantity
+        sort_quantity = request.args.get('quantity', type=int)
+
+    # Process the checkboxes
+    checkbox_dict = {'accel': "accel" in sort_checkbox,
+                     'speed': "speed" in sort_checkbox,
+                     'handl': "handl" in sort_checkbox}
+
+    # Process the agregate function from the get
+    if sort_agregate == "sum":
+        agregate_func = agregate_sum_func
+    elif sort_agregate == "max":
+        agregate_func = agregate_max_func
+
+    return checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity
 
 
 # Sum of all attributes specified in the checkbox dict
 def agregate_sum_func(car, checkbox_dict):
-    sum = 0
+    suma = 0
     if checkbox_dict['accel'] is True:
-        sum += car.get_accel_value()
+        suma += car.get_accel_value()
     if checkbox_dict['speed'] is True:
-        sum += car.get_speed_value()
+        suma += car.get_speed_value()
     if checkbox_dict['handl'] is True:
-        sum += car.get_handl_value()
-    return sum
+        suma += car.get_handl_value()
+    return suma
 
 
 # Max among all attributes in the checkbox dict
 def agregate_max_func(car, checkbox_dict):
-    m = 0
+    maximum = 0
     if checkbox_dict[ 'accel' ] is True:
-        m = max(m, car.get_accel_value())
+        maximum = max(maximum, car.get_accel_value())
     if checkbox_dict[ 'speed' ] is True:
-        m = max(m, car.get_speed_value())
+        maximum = max(maximum, car.get_speed_value())
     if checkbox_dict[ 'handl' ] is True:
-        m = max(m, car.get_handl_value())
-    return m
+        maximum = max(maximum, car.get_handl_value())
+    return maximum

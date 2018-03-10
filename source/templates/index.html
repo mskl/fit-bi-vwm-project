@@ -15,6 +15,7 @@
                             <option value="naive" {% if algorithm == "naive" %}selected{% endif %}>naive</option>
                             <option value="treshold" {% if algorithm == "treshold" %}selected{% endif %}>treshold</option>
                         </select>
+                        {{ algorithm }}
                         <!-- Quantity and submit button -->
                         <input type="number" name="quantity" min="3" max="10" value="{{ quantity or 5 }}" title="query size">
                         <input type="submit" value="Sort by parameters" title="submit the query">

@@ -1,12 +1,9 @@
 import csv
-import heapq as heap
+from source.algorithms import *
 from source.classes.Automobile import Automobile
 from source.classes.MutableTuple import MutableTuple
-from source.algorithms import agregate_sum_func
 from source.classes.MyHeap import MyHeap
 
-# The keys that are used to map the variables from the csv file
-keys = ["name","acceleration","speed","handling"]
 
 class CarDatabase:
     # Array containing all instances of cars
@@ -71,8 +68,7 @@ class CarDatabase:
         # Create a new array with agregate values
         agregated = []
         for car in self.__cars:
-            tuple = MutableTuple(car, agregate_func(car, checkbox_dict))
-            agregated.append(tuple)
+            agregated.append(MutableTuple(car, agregate_func(car, checkbox_dict)))
         agregated.sort(reverse=True)
         return agregated
 
@@ -95,25 +91,37 @@ class CarDatabase:
         seen = set()
 
         for i in range(0, len(self.__cars)):
-            # Get the row
             first_accel = self.__car_accel[i]
             first_speed = self.__car_speed[i]
             first_handl = self.__car_handl[i]
-            # Set treshold
+
+            # If I found the target the alg should end (set_treshold returned true => END)
             treshold = first_accel.value() + first_speed.value() + first_handl.value()
-            # Check if I found the target
-            if not my_heap.set_treshold(treshold):
+            if my_heap.set_treshold(treshold):
                 break
+
             # Compute score of seen objects
             if not seen.__contains__(first_accel):
                 seen.add(first_accel)
                 fa = agregate_func(first_accel, checkbox_dict)
-                my_heap.add_element(fa, first_accel)
+                my_heap.add_element(first_accel, fa)
             if not seen.__contains__(first_speed):
                 seen.add(first_speed)
                 fs = agregate_func(first_speed, checkbox_dict)
-                my_heap.add_element(fs, first_speed)
+                my_heap.add_element(first_speed, fs)
             if not seen.__contains__(first_handl):
                 seen.add(first_handl)
                 fh = agregate_func(first_handl, checkbox_dict)
-                my_heap.add_element(fh, first_handl)
+                my_heap.add_element(first_handl, fh)
+
+        return my_heap
+
+
+if __name__ == "__main__":
+    cd = CarDatabase("../data/nsfmw2/cars_short.csv")
+    checkbox_dict = dict()
+    checkbox_dict["accel"] = True
+    checkbox_dict["speed"] = True
+    checkbox_dict["handl"] = True
+
+    result = cd.top_k_treshold(checkbox_dict, agregate_sum_func, 5)
