@@ -6,29 +6,32 @@
             <tr>
                 <form action="/" method="get">
                     <td>
-                        <select name="agregate">
+                        <!-- The settings select boxes -->
+                        <select name="agregate" title="comparsion function">
                             <option value="sum" {% if agregate == "sum" %}selected{% endif %}>sum</option>
                             <option value="max" {% if agregate == "max" %}selected{% endif %}>max</option>
                         </select>
-                        <select name="algorithm">
-                            <option value="treshold" {% if agregate == "treshold" %}selected{% endif %}>treshold</option>
-                            <option value="naive" {% if agregate == "naive" %}selected{% endif %}>naive</option>
+                        <select name="algorithm" title="query algorithm">
+                            <option value="naive" {% if algorithm == "naive" %}selected{% endif %}>naive</option>
+                            <option value="treshold" {% if algorithm == "treshold" %}selected{% endif %}>treshold</option>
                         </select>
-                        <input type="number" name="quantity" min="3" max="10" value="{{ quantity or 3 }}">
-                        <input type="submit" value="Sort by parameters">
+                        <!-- Quantity and submit button -->
+                        <input type="number" name="quantity" min="3" max="10" value="{{ quantity or 5 }}" title="query size">
+                        <input type="submit" value="Sort by parameters" title="submit the query">
                     </td>
+                    <!-- Checkboxes for sorting based on individual/combined atributes -->
                     <td>
-                        <input type="checkbox" name="sort" value="accel"
+                        <input type="checkbox" name="sort" value="accel" title="acceleration"
                                {% if checkdict['accel'] == True %}checked{% endif %}>
                         Acceleration
                     </td>
                     <td>
-                        <input type="checkbox" name="sort" value="speed"
+                        <input type="checkbox" name="sort" value="speed" title="speed"
                                {% if checkdict['speed'] == True %}checked{% endif %}>
                         Speed
                     </td>
                     <td>
-                        <input type="checkbox" name="sort" value="handl"
+                        <input type="checkbox" name="sort" value="handl" title="handling"
                                {% if checkdict['handl'] == True %}checked{% endif %}>
                         Handling
                     </td>

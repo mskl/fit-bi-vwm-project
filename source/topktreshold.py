@@ -7,20 +7,21 @@ import time
 app = Flask(__name__)
 
 # The path to the CSV file comtaining the data
-csv_path = "data/nsfmw2/cars_short.csv"
+CSV_PATH = "data/nsfmw2/cars_short.csv"
 
 # Reverses all sort algorithms
 db_reversed = False
 
 # The whole DB
-car_database = CarDatabase(csv_path)
+car_database = CarDatabase(CSV_PATH)
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+def process_get():
+    # The default values
     sort_checkbox = False, False, False
     sort_agregate = "sum"
     sort_algorithm = "naive"
+    agregate_func = agregate_sum_func
     sort_quantity = 3
 
     # Obtain the GET parameters
@@ -35,36 +36,49 @@ def index():
         sort_quantity = request.args.get('quantity', type=int)
 
     # Process the obtained parameters
-    a, s, h = ash_from_post_list(sort_checkbox)
-    checkbox_dict = {'accel':a, 'speed':s, 'handl':h}
-    agregate_func = agregate_sum_func
+    checkbox_dict = {'accel': "accel" in sort_checkbox,
+                     'speed': "speed" in sort_checkbox,
+                     'handl': "handl" in sort_checkbox}
     if sort_agregate == "sum":
         agregate_func = agregate_sum_func
     elif sort_agregate == "max":
         agregate_func = agregate_max_func
 
-    # Return the correct database and webpage
+    return checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity
+
+
+########################################################################################################################
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    # Get the processed GET parameters and settings
+    checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity = process_get()
+
+    # Return the correct database and template
     if sort_algorithm == "treshold":
         start = time.time()
-        db = car_database.top_k_treshold(a, s, h, agregate_func, sort_quantity)
+        db = car_database.top_k_treshold(checkbox_dict, agregate_func, sort_quantity)
         q_time = time.time() - start
-        return render_template("index.html", title='Index - treshold top-k', database=db,
-                               checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
+        # Render the website
+        return render_template("index.html", title='Index - treshold top-k',
+                               database=db, checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
                                quantity=sort_quantity, querytime=q_time)
-    else: # sort_algorithm == "naive":
+    else:  # elif sort_algorithm == "naive":
         start = time.time()
-        db = car_database.naive_k(a, s, h, agregate_func, sort_quantity)
+        db = car_database.naive_k(checkbox_dict, agregate_func, sort_quantity)
         q_time = time.time() - start
-        return render_template("index.html", title='Index - treshold naive-k', database=db,
-                               checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
+        # Render the website
+        return render_template("index.html", title='Index - treshold naive-k',
+                               database=db, checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
                                quantity=sort_quantity, querytime=q_time)
 
 
+########################################################################################################################
 @app.route('/about')
 def about():
     return render_template("about.html", title='About')
 
 
+########################################################################################################################
 @app.errorhandler(404)
 def error(e):
     return render_template("error.html", title='404'), 404

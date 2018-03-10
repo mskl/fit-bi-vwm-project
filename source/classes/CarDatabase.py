@@ -67,21 +67,21 @@ class CarDatabase:
     def get_handl(self):
         return self.__car_handl
 
-    def naive_rank_sort(self, a, s, h, agregate_func):
+    def naive_rank_sort(self, checkbox_dict, agregate_func):
         # Create a new array with agregate values
         agregated = []
         for car in self.__cars:
-            tuple = MutableTuple(car, agregate_func(car, a, s, h))
+            tuple = MutableTuple(car, agregate_func(car, checkbox_dict))
             agregated.append(tuple)
         agregated.sort(reverse=True)
         return agregated
 
     # 1. Compute overall score for every object by looking into each sorted list.
     # 2. Return k objects with the highest overall score.
-    def naive_k(self, a, s, h, agregate_func, k):
+    def naive_k(self, checkbox_dict, agregate_func, k):
         results = []
         for car in self.__cars:
-            results.append(MutableTuple(car, agregate_func(car, a, s, h)))
+            results.append(MutableTuple(car, agregate_func(car, checkbox_dict)))
         results.sort(reverse=True)
         return results[:k]
 
@@ -90,7 +90,7 @@ class CarDatabase:
     # 3. Maintain a list of top-k objects seen so far
     # 4. Stop, when the scores of the top-k are greater or equal to the threshold.
     # e. Return the top-k seen so far
-    def top_k_treshold(self, a, s, h, agregate_func, k):
+    def top_k_treshold(self, checkbox_dict, agregate_func, k):
         my_heap = MyHeap(k)
         seen = set()
 
@@ -107,13 +107,13 @@ class CarDatabase:
             # Compute score of seen objects
             if not seen.__contains__(first_accel):
                 seen.add(first_accel)
-                fa = agregate_func(first_accel, a, s, h)
+                fa = agregate_func(first_accel, checkbox_dict)
                 my_heap.add_element(fa, first_accel)
             if not seen.__contains__(first_speed):
                 seen.add(first_speed)
-                fs = agregate_func(first_speed, a, s, h)
+                fs = agregate_func(first_speed, checkbox_dict)
                 my_heap.add_element(fs, first_speed)
             if not seen.__contains__(first_handl):
                 seen.add(first_handl)
-                fh = agregate_func(first_handl, a, s, h)
+                fh = agregate_func(first_handl, checkbox_dict)
                 my_heap.add_element(fh, first_handl)
