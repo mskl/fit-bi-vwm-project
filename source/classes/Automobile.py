@@ -5,6 +5,7 @@ class Automobile:
         self.speed = None
         self.handl = None
 
+    # Contains references to the MutableTuple objects
     def assign(self, _name, _accel, _speed, _handl):
         self.name = _name
         self.accel = _accel
@@ -22,6 +23,10 @@ class Automobile:
 
     def get_handl_value(self):
         return self.handl.value()
+
+    # A hack to make itself compatible with the MutableTuple
+    def key(self):
+        return self
 
     def __str__(self):
         return str(self.get_name_value()) \

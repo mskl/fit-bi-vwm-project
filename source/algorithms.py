@@ -1,4 +1,5 @@
 from flask import request
+import time
 
 
 # Process the GET parameters
@@ -39,21 +40,31 @@ def process_get_parameters():
 def agregate_sum_func(car, checkbox_dict):
     suma = 0
     if checkbox_dict['accel'] is True:
-        suma += car.get_accel_value()
+        suma += car.key().get_accel_value()
     if checkbox_dict['speed'] is True:
-        suma += car.get_speed_value()
+        suma += car.key().get_speed_value()
     if checkbox_dict['handl'] is True:
-        suma += car.get_handl_value()
+        suma += car.key().get_handl_value()
     return suma
 
 
 # Max among all attributes in the checkbox dict
 def agregate_max_func(car, checkbox_dict):
     maximum = 0
-    if checkbox_dict[ 'accel' ] is True:
-        maximum = max(maximum, car.get_accel_value())
-    if checkbox_dict[ 'speed' ] is True:
-        maximum = max(maximum, car.get_speed_value())
-    if checkbox_dict[ 'handl' ] is True:
-        maximum = max(maximum, car.get_handl_value())
+    if checkbox_dict['accel'] is True:
+        maximum = max(maximum, car.key().get_accel_value())
+    if checkbox_dict['speed'] is True:
+        maximum = max(maximum, car.key().get_speed_value())
+    if checkbox_dict['handl'] is True:
+        maximum = max(maximum, car.key().get_handl_value())
     return maximum
+
+
+# The wrapper that wraps any function and returns a (<return by func>, exec. time), tuple
+def timed(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        q_time = time.time() - start
+        return result, q_time
+    return wrapper

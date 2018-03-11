@@ -1,14 +1,13 @@
-from source.classes.Automobile import Automobile
+def dec(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return result, 3
+    return wrapper
+
+@dec
+def foo():
+    return {'a':1, 'b':2}
 
 if __name__ == "__main__":
-
-    a = Automobile("ford", 0, 1, 2)
-    b = Automobile("mazda", 3, 4, 5)
-
-    d = {}
-
-    d.update({a: 123})
-    d.update({b: 456})
-
-    print(d)
-    print(d[a])
+    result = foo()
+    print(result)

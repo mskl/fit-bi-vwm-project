@@ -79,7 +79,8 @@ class CarDatabase:
     def get_handl(self):
         return self.__car_handl
 
-    def naive_k(self, checkbox_dict, agregate_func, k):
+    @timed
+    def top_k_naive(self, checkbox_dict, agregate_func, k):
         # 1. Compute overall score for every object by looking into each sorted list.
         # 2. Return k objects with the highest overall score.
         results = []
@@ -88,6 +89,7 @@ class CarDatabase:
         results.sort(reverse=True)
         return results[:k]
 
+    @timed
     def top_k_treshold(self, checkbox_dict, agregate_func, k):
         # 1. Set the threshold t to be the aggregate of the scores seen in this access.
         # 2. Do random accesses and compute the scores of the seen objects.
@@ -108,20 +110,20 @@ class CarDatabase:
                 break
 
             # Compute score of seen objects
-            if not seen.__contains__(first_accel):
-                seen.add(first_accel)
+            if first_accel.key() not in seen:
+                seen.add(first_accel.key())
                 fa = agregate_func(first_accel, checkbox_dict)
                 my_heap.add_element(first_accel, fa)
-            if not seen.__contains__(first_speed):
-                seen.add(first_speed)
+            if first_speed.key() not in seen:
+                seen.add(first_speed.key())
                 fs = agregate_func(first_speed, checkbox_dict)
                 my_heap.add_element(first_speed, fs)
-            if not seen.__contains__(first_handl):
-                seen.add(first_handl)
+            if first_handl.key() not in seen:
+                seen.add(first_handl.key())
                 fh = agregate_func(first_handl, checkbox_dict)
                 my_heap.add_element(first_handl, fh)
 
-        return my_heap
+        return sorted(my_heap.minimum_heap, reverse=True)
 
 
 if __name__ == "__main__":
@@ -131,4 +133,8 @@ if __name__ == "__main__":
     checkbox_dict["speed"] = True
     checkbox_dict["handl"] = True
 
-    result = cd.top_k_treshold(checkbox_dict, agregate_sum_func, 5)
+    result_tresh = cd.top_k_treshold(checkbox_dict, agregate_sum_func, 5)
+    print(result_tresh)
+
+    # 4556439848@  <Nissan Skyline GT-R V-Spec (R34) - 30 28 54, 112>
+    # 4556440912@< <Subaru Impreza WRX STi (2004) - 33 40 35,    40> , 108>

@@ -31,7 +31,7 @@ class MyHeap:
 
     def __heap_push(self, element_key, element_value):
         self.max_value = max(element_value, self.max_value)
-        heap.heappush(self.minimum_heap, MutableTuple(element_key, element_value))
+        heap.heappush(self.minimum_heap, MutableTuple(element_key.key(), element_value))
 
     def __heap_pop_min(self):
         heap.heappop(self.minimum_heap)
