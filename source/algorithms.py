@@ -3,59 +3,39 @@ import time
 
 
 # Process the GET parameters
-def process_get_parameters():
-    # The default values for the variables returned
-    sort_checkbox = False, False, False
-    sort_agregate = "sum"
-    sort_algorithm = "naive"
-    agregate_func = agregate_sum_func
-    sort_quantity = 3
-
-    # Obtain the GET parameters
-    if request.method == "GET":
-        # Values of checkboxes
-        sort_checkbox = request.args.getlist('sort')
-        # The sorting function
-        sort_agregate = request.args.get('agregate')
-        # The algorithm to get the top-k
-        sort_algorithm = request.args.get('algorithm')
-        # The treshold quantity
-        sort_quantity = request.args.get('quantity', type=int)
-
-    # Process the checkboxes
-    checkbox_dict = {'accel': "accel" in sort_checkbox,
-                     'speed': "speed" in sort_checkbox,
-                     'handl': "handl" in sort_checkbox}
-
-    # Process the agregate function from the get
-    if sort_agregate == "sum":
-        agregate_func = agregate_sum_func
-    elif sort_agregate == "max":
-        agregate_func = agregate_max_func
-
-    return checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity
+def get_form_data():
+    # Settings that are obtained from the GET
+    sort_checkbox = request.args.getlist('sort')
+    form_settings_dict = {'checkbox': {'accel': "accel" in sort_checkbox or False,
+                                         'speed': "speed" in sort_checkbox or False,
+                                         'handl': "handl" in sort_checkbox or False},
+                          'agregate': request.args.get('agregate') or "sum",
+                          'algorithm': request.args.get('algorithm') or "naive",
+                          'quantity': request.args.get('quantity', type=int) or 3}
+    # Return thr dict
+    return form_settings_dict
 
 
 # Sum of all attributes specified in the checkbox dict
-def agregate_sum_func(car, checkbox_dict):
-    suma = 0
-    if checkbox_dict['accel'] is True:
-        suma += car.key().get_accel_value()
-    if checkbox_dict['speed'] is True:
-        suma += car.key().get_speed_value()
-    if checkbox_dict['handl'] is True:
-        suma += car.key().get_handl_value()
-    return suma
+def agregate_sum_func(car, form_data):
+    soucet = 0
+    if form_data['checkbox']['accel'] is True:
+        soucet += car.key().get_accel_value()
+    if form_data['checkbox']['speed'] is True:
+        soucet += car.key().get_speed_value()
+    if form_data['checkbox']['handl'] is True:
+        soucet += car.key().get_handl_value()
+    return soucet
 
 
 # Max among all attributes in the checkbox dict
-def agregate_max_func(car, checkbox_dict):
+def agregate_max_func(car, form_data):
     maximum = 0
-    if checkbox_dict['accel'] is True:
+    if form_data['checkbox']['accel'] is True:
         maximum = max(maximum, car.key().get_accel_value())
-    if checkbox_dict['speed'] is True:
+    if form_data['checkbox']['speed'] is True:
         maximum = max(maximum, car.key().get_speed_value())
-    if checkbox_dict['handl'] is True:
+    if form_data['checkbox']['handl'] is True:
         maximum = max(maximum, car.key().get_handl_value())
     return maximum
 

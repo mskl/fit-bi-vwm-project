@@ -18,26 +18,36 @@ car_database = CarDatabase(CSV_PATH)
 ########################################################################################################################
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # dict         string         string          function       int             Process GET parameters
-    checkbox_dict, sort_agregate, sort_algorithm, agregate_func, sort_quantity = process_get_parameters()
+    # Obtain the settings from the form
+    form_data = get_form_data()
+
+    # Process the agregate function from the get
+    if form_data['agregate'] == "sum":
+        agregate_func = agregate_sum_func
+    else:
+        agregate_func = agregate_max_func
 
     # Return the correct database and template
-    if sort_algorithm == "treshold":
-        db, q_time = car_database.top_k_treshold(checkbox_dict, agregate_func, sort_quantity)
+    if form_data['algorithm'] == "treshold":
+        db, q_time = car_database.top_k_treshold(form_data, agregate_func)
         return render_template("index.html", title='Index - treshold top-k',
-                               database=db, checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
-                               quantity=sort_quantity, querytime=q_time)
+                               database=db, form_data=form_data, querytime=q_time)
     else:
-        db, q_time = car_database.top_k_naive(checkbox_dict, agregate_func, sort_quantity)
+        db, q_time = car_database.top_k_naive(form_data, agregate_func)
         return render_template("index.html", title='Index - treshold naive-k',
-                               database=db, checkdict=checkbox_dict, algorithm=sort_algorithm, agregate=sort_agregate,
-                               quantity=sort_quantity, querytime=q_time)
+                               database=db, form_data=form_data, querytime=q_time)
 
 
 ########################################################################################################################
 @app.route('/about')
 def about():
     return render_template("about.html", title='About')
+
+
+########################################################################################################################
+@app.route('/settings')
+def settings():
+    return render_template("settings.html", title='Settings')
 
 
 ########################################################################################################################
