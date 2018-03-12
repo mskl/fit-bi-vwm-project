@@ -1,5 +1,11 @@
 {% extends "baser.html" %}
 
 {% block main %}
-    
+    <p>{{ payload }}</p>
+    <form action="/settings" method="get">
+        <select name="dataset" title="the dataset used">
+            <option value="NFS" {% if form_data['dataset'] == "NFS" %}selected{% endif %}>Need for Speed</option>
+        </select>
+        <input type="submit" value="Set the settings" title="Set the settings">
+    </form>
 {% endblock %}

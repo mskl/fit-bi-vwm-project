@@ -16,7 +16,7 @@ car_database = CarDatabase(CSV_PATH)
 
 
 ########################################################################################################################
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     # Obtain the settings from the form
     form_data = get_form_data()
@@ -45,9 +45,19 @@ def about():
 
 
 ########################################################################################################################
-@app.route('/settings')
+@app.route('/settings', methods=['GET'])
 def settings():
-    return render_template("settings.html", title='Settings')
+    payload = ""
+    dataset_get = request.args.get('dataset');
+
+    form_data = {
+        'dataset': dataset_get or "NFS",
+    }
+
+    if dataset_get is not None:
+        payload = "Setting the dataset to %s" %dataset_get
+
+    return render_template("settings.html", payload=payload, form_data=form_data,  title='Settings')
 
 
 ########################################################################################################################
