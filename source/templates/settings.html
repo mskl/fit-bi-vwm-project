@@ -4,7 +4,8 @@
     <p>{{ payload }}</p>
     <form action="/settings" method="get">
         <select name="dataset" title="the dataset used">
-            <option value="NFS" {% if form_data['dataset'] == "NFS" %}selected{% endif %}>Need for Speed</option>
+            <option value="NFS" {% if dataset == "NFS" %}selected{% endif %}>Need for Speed</option>
+            <option value="random" {% if dataset == "random" %}selected{% endif %}>Random Values</option>
         </select>
         <input type="submit" value="Set the settings" title="Set the settings">
     </form>

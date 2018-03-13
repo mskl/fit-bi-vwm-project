@@ -7,11 +7,11 @@ def get_form_data():
     # Settings that are obtained from the GET
     sort_checkbox = request.args.getlist('sort')
     form_settings_dict = {'checkbox': {'accel': "accel" in sort_checkbox or False,
-                                         'speed': "speed" in sort_checkbox or False,
-                                         'handl': "handl" in sort_checkbox or False},
+                                       'speed': "speed" in sort_checkbox or False,
+                                       'handl': "handl" in sort_checkbox or False},
                           'agregate': request.args.get('agregate') or "sum",
                           'algorithm': request.args.get('algorithm') or "naive",
-                          'quantity': request.args.get('quantity', type=int) or 3}
+                          'quantity': request.args.get('quantity', type=int) or 10}
     # Return thr dict
     return form_settings_dict
 

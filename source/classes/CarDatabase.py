@@ -127,7 +127,7 @@ class CarDatabase:
 
 
 if __name__ == "__main__":
-    cd = CarDatabase("../data/nsfmw2/cars_short.csv")
+    cd = CarDatabase("../data/nsfmw2/cars_nfs.csv")
     checkbox_dict = dict()
     checkbox_dict["accel"] = True
     checkbox_dict["speed"] = True

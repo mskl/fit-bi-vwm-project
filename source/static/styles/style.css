@@ -2,12 +2,11 @@
 /* CSS Document */
 
 #wholeweb {
-	margin: 0 auto;	
 	background-color: #FFF;
 	display: block;
 	width: 60%;
 	height: 80%;
-	margin-top: 50px;
+	margin: 50px auto 0;
 	font-size: small;
 	font-weight:200;
 	font-family: 'Open Sans', sans-serif;
