@@ -80,23 +80,28 @@ class CarDatabase:
         return self.__car_handl
 
     @timed
-    def top_k_naive(self, form_settings_dict, agregate_func):
+    def top_k_naive(self, form_values, agregate_func):
         # 1. Compute overall score for every object by looking into each sorted list.
         # 2. Return k objects with the highest overall score.
         results = []
         for car in self.__cars:
-            results.append(MutableTuple(car, agregate_func(car, form_settings_dict)))
+            agregated = agregate_func(car, form_values)
+            results.append(MutableTuple(car, agregated))
         results.sort(reverse=True)
-        return results[:form_settings_dict['quantity']]
+        return results[:form_values.get('quantity', type=int, default=10)]
 
     @timed
-    def top_k_treshold(self, form_settings_dict, agregate_func):
+    def top_k_treshold(self, form_values, agregate_func):
         # 1. Set the threshold t to be the aggregate of the scores seen in this access.
         # 2. Do random accesses and compute the scores of the seen objects.
         # 3. Maintain a list of top-k objects seen so far
         # 4. Stop, when the scores of the top-k are greater or equal to the threshold.
-        # e. Return the top-k seen so far
-        my_heap = MyHeap(form_settings_dict['quantity'])
+        # end. Return the top-k seen so far
+
+        # Heap contains <agregate_value, car>
+        my_heap = MyHeap(form_values.get('quantity', default=10, type=int))
+
+        # Set of the objects that i've explored
         seen = set()
 
         for i in range(0, len(self.__cars)):
@@ -112,29 +117,16 @@ class CarDatabase:
             # Compute score of seen objects
             if first_accel.key() not in seen:
                 seen.add(first_accel.key())
-                fa = agregate_func(first_accel, form_settings_dict)
+                fa = agregate_func(first_accel, form_values)
                 my_heap.add_element(first_accel, fa)
             if first_speed.key() not in seen:
                 seen.add(first_speed.key())
-                fs = agregate_func(first_speed, form_settings_dict)
+                fs = agregate_func(first_speed, form_values)
                 my_heap.add_element(first_speed, fs)
             if first_handl.key() not in seen:
                 seen.add(first_handl.key())
-                fh = agregate_func(first_handl, form_settings_dict)
+                fh = agregate_func(first_handl, form_values)
                 my_heap.add_element(first_handl, fh)
 
         return sorted(my_heap.minimum_heap, reverse=True)
 
-
-if __name__ == "__main__":
-    cd = CarDatabase("../data/nsfmw2/cars_nfs.csv")
-    checkbox_dict = dict()
-    checkbox_dict["accel"] = True
-    checkbox_dict["speed"] = True
-    checkbox_dict["handl"] = True
-
-    result_tresh = cd.top_k_treshold(checkbox_dict, agregate_sum_func, 5)
-    print(result_tresh)
-
-    # 4556439848@  <Nissan Skyline GT-R V-Spec (R34) - 30 28 54, 112>
-    # 4556440912@< <Subaru Impreza WRX STi (2004) - 33 40 35,    40> , 108>

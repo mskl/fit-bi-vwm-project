@@ -8,31 +8,31 @@
                     <td>
                         <!-- The settings select boxes -->
                         <select name="agregate" title="comparsion function">
-                            <option value="sum" {% if form_data['agregate'] == "sum" %}selected{% endif %}>sum</option>
-                            <option value="max" {% if form_data['agregate'] == "max" %}selected{% endif %}>max</option>
+                            <option value="sum" {% if request.args.get('agregate') == "sum" or None %}selected{% endif %}>sum</option>
+                            <option value="max" {% if request.args.get('agregate') == "max" %}selected{% endif %}>max</option>
                         </select>
                         <select name="algorithm" title="query algorithm">
-                            <option value="naive" {% if form_data['algorithm'] == "naive" %}selected{% endif %}>naive</option>
-                            <option value="treshold" {% if form_data['algorithm'] == "treshold" %}selected{% endif %}>treshold</option>
+                            <option value="naive" {% if request.args.get('algorithm') == "naive" or None %}selected{% endif %}>naive</option>
+                            <option value="treshold" {% if request.args.get('algorithm') == "treshold" %}selected{% endif %}>treshold</option>
                         </select>
                         <!-- Quantity and submit button -->
-                        <input type="number" name="quantity" min="1" max="20" value="{{ form_data['quantity'] or 10 }}" title="query size">
+                        <input type="number" name="quantity" min="1" max="20" value="{{ request.args.get('quantity') or 10 }}" title="query size">
                         <input type="submit" value="Sort by parameters" title="submit the query">
                     </td>
                     <!-- Checkboxes for sorting based on individual/combined atributes -->
                     <td>
                         <input type="checkbox" name="sort" value="accel" title="acceleration"
-                               {% if form_data['checkbox']['accel'] == True %}checked{% endif %}>
+                               {% if "accel" in request.args.getlist('sort') %}checked{% endif %}>
                         Acceleration
                     </td>
                     <td>
                         <input type="checkbox" name="sort" value="speed" title="speed"
-                               {% if form_data['checkbox']['speed'] == True %}checked{% endif %}>
+                               {% if "speed" in request.args.getlist('sort') %}checked{% endif %}>
                         Speed
                     </td>
                     <td>
                         <input type="checkbox" name="sort" value="handl" title="handling"
-                               {% if form_data['checkbox']['handl'] == True %}checked{% endif %}>
+                               {% if "handl" in request.args.getlist('sort') %}checked{% endif %}>
                         Handling
                     </td>
                 </form>
