@@ -6,7 +6,8 @@
         <select name="dataset" title="the dataset used">
             <option value="NFS" {% if dataset == "NFS" %}selected{% endif %}>Need for Speed</option>
             <option value="random" {% if dataset == "random" %}selected{% endif %}>Random Values</option>
+            <option value="wordlist" {% if dataset == "wordlist" %}selected{% endif %}>Czech Wordlist</option>
         </select>
-        <input type="submit" value="Set the settings" title="Set the settings">
+        <input type="submit" value="Set the dataset" title="Set the settings">
     </form>
 {% endblock %}

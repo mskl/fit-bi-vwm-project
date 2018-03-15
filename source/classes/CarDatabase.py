@@ -4,7 +4,9 @@ from source.classes.Automobile import Automobile
 from source.classes.MutableTuple import MutableTuple
 from source.classes.MyHeap import MyHeap
 
-''' The DB structure of the CarDatabase.                                          
+
+''' The DB structure of the CarDatabase. 
+                                         
    __car_names       __car_accel       __car_speed       __car_handl   
 ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐
 │  car  │ name  │ │  car  │ accel │ │  car  │ speed │ │  car  │ handl │
@@ -28,6 +30,15 @@ class CarDatabase:
     __car_handl = []
 
     def __init__(self, csv_path):
+        self.set_database(csv_path)
+
+    def set_database(self, csv_path):
+        del self.__cars[:]
+        del self.__car_names[:]
+        del self.__car_accel[:]
+        del self.__car_speed[:]
+        del self.__car_handl[:]
+
         # Parse the CSV document and save the values to my lists
         self.__parse_csv_classes(csv_path)
         # Sort all subarrays
@@ -79,13 +90,26 @@ class CarDatabase:
     def get_handl(self):
         return self.__car_handl
 
+    def __get_treshold(self, a, s, h, aval, sval, hval):
+        treshold = 0
+        if a:
+            treshold += aval
+        if s:
+            treshold += sval
+        if h:
+            treshold += hval
+        return treshold
+
     @timed
     def top_k_naive(self, form_values, agregate_func):
         # 1. Compute overall score for every object by looking into each sorted list.
         # 2. Return k objects with the highest overall score.
         results = []
+        a = 'accel' in form_values.getlist('sort')
+        s = 'speed' in form_values.getlist('sort')
+        h = 'handl' in form_values.getlist('sort')
         for car in self.__cars:
-            agregated = agregate_func(car, form_values)
+            agregated = agregate_func(car, a, s, h)
             results.append(MutableTuple(car, agregated))
         results.sort(reverse=True)
         return results[:form_values.get('quantity', type=int, default=10)]
@@ -103,30 +127,35 @@ class CarDatabase:
 
         # Set of the objects that i've explored
         seen = set()
+        a = 'accel' in form_values.getlist('sort')
+        s = 'speed' in form_values.getlist('sort')
+        h = 'handl' in form_values.getlist('sort')
 
         for i in range(0, len(self.__cars)):
             first_accel = self.__car_accel[i]
             first_speed = self.__car_speed[i]
             first_handl = self.__car_handl[i]
 
+            # Compute the treshold for a row
+            treshold = self.__get_treshold(a, s, h, first_accel.value(), first_speed.value(), first_handl.value())
+
             # If I found the target the alg should end (set_treshold returned true => END)
-            treshold = first_accel.value() + first_speed.value() + first_handl.value()
             if my_heap.set_treshold(treshold):
                 break
 
             # Compute score of seen objects
             if first_accel.key() not in seen:
                 seen.add(first_accel.key())
-                fa = agregate_func(first_accel, form_values)
+                fa = agregate_func(first_accel, a, s, h)
                 my_heap.add_element(first_accel, fa)
             if first_speed.key() not in seen:
                 seen.add(first_speed.key())
-                fs = agregate_func(first_speed, form_values)
+                fs = agregate_func(first_speed, a, s, h)
                 my_heap.add_element(first_speed, fs)
             if first_handl.key() not in seen:
                 seen.add(first_handl.key())
-                fh = agregate_func(first_handl, form_values)
+                fh = agregate_func(first_handl, a, s, h)
                 my_heap.add_element(first_handl, fh)
 
-        return sorted(my_heap.minimum_heap, reverse=True)
+        return my_heap.get_sorted_elements()
 

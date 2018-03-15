@@ -1,29 +1,27 @@
 from flask import request
 import time
 
+
 # Sum of all attributes specified in the checkbox dict
-def agregate_sum_func(car, form_data):
+def agregate_sum_func(car, _a, _s, _h):
     soucet = 0
-    checkbox_list = form_data.getlist('sort')
-    print(checkbox_list)
-    if 'accel' in checkbox_list:
+    if _a:
         soucet += car.key().get_accel_value()
-    if 'speed' in checkbox_list:
+    if _s:
         soucet += car.key().get_speed_value()
-    if 'handl' in checkbox_list:
+    if _h:
         soucet += car.key().get_handl_value()
     return soucet
 
 
 # Max among all attributes in the checkbox dict
-def agregate_max_func(car, form_data):
+def agregate_max_func(car, _a, _s, _h):
     maximum = 0
-    checkbox_list = form_data.getlist('sort')
-    if 'accel' in checkbox_list:
+    if _a:
         maximum = max(maximum, car.key().get_accel_value())
-    if 'speed' in checkbox_list:
+    if _s:
         maximum = max(maximum, car.key().get_speed_value())
-    if 'handl' in checkbox_list:
+    if _h:
         maximum = max(maximum, car.key().get_handl_value())
     return maximum
 
@@ -42,6 +40,6 @@ def timed(func):
 def get_agregate_function(form_data):
     # Process the agregate function from the get
     if form_data.get('agregate') == "max":
-        return agregate_sum_func
-    else:
         return agregate_max_func
+    else:
+        return agregate_sum_func
