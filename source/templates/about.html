@@ -1,5 +1,16 @@
 {% extends "baser.html" %}
 
 {% block main %}
-    This project was developed as a semestral assignment for the BI-VMW subject at the FIT CTU.
+    <p>
+        This project was developed as a semestral assignment for the BI-VMW subject at the FIT CTU.
+    </p>
+
+    <p>
+        The data is stored in 3 arrays each containing a KeyValue pair (car, value).
+        Each array is sorted when the server starts.
+    </p>
+    <img style="display: block; width: 100%" src="{{ url_for('static',filename='images/db_structure.png') }}">
+    <p>
+        I have implemented 2 functions to get the best items based on the parameters selected by the checkbox.
+    </p>
 {% endblock %}

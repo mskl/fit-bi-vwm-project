@@ -5,7 +5,9 @@ from source.classes.MutableTuple import MutableTuple
 from source.classes.MyHeap import MyHeap
 
 
-''' The DB structure of the CarDatabase. 
+''' 
+
+The DB structure of the CarDatabase. 
                                          
    __car_names       __car_accel       __car_speed       __car_handl   
 ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐
@@ -17,6 +19,8 @@ from source.classes.MyHeap import MyHeap
 ┌───────┐                                                              
 │  car  │ __cars  = [car instance]                                                
 └───────┘                                                                                                 
+
+
 '''
 
 
