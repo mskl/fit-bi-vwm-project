@@ -25,17 +25,18 @@
 }
 
 #main {
-	border: 5px black;
+	border: 5px #72768a;
 }
 
 #footer {
 	color: #999;
 	margin-top: 1em;
-	border-top: 1px solid #CCCCCC;
+	border-top: 1px solid #72768a;
 }
 
 #headertext {
-
+	font-size: 1.5vw;
+	color: #000000;
 }
 
 #navbar {
@@ -56,6 +57,19 @@
 	text-decoration:none;
 }
 
+h2:after
+{
+    content:' ';
+    display:block;
+    border:2px solid #32364c;
+}
+
+h3:after
+{
+    content:' ';
+    display:block;
+    border:1px solid #d6d6d6;
+}
 
 .line {
 	border-bottom: 1px dotted #CCCCCC;
@@ -74,14 +88,15 @@ p {
 	border-collapse:collapse;
 }
 
-.product_table td {
+.product_table tbody td {
 	border-bottom: 1px solid white;
     border-top: 1px solid white;
 }
 
 .product_table thead td {
-	padding: 10px;
-	background-color: rgba(255, 105, 180, 0.4);
+	border-bottom: 5px solid #eeeeee;
+	padding: 4px 7px 4px 7px;
+	background-color: rgb(240, 255, 16);
 }
 
 .product_table tbody tr:nth-child(odd) {
@@ -97,9 +112,27 @@ p {
 	padding: 0;
 }
 
-.product_parameter span {
+.product_percentage {
 	display: inline-block;
 	height: 100%;
-	background-color: rgba(157, 255, 42, 0.4);
-	padding: 2px;
+	background-color: rgba(255, 7, 173, 0.6);
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.product_percentage_text {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+h4 {
+	padding-bottom: 0;
+	margin-bottom: 0;
 }

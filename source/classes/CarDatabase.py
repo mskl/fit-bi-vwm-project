@@ -5,9 +5,7 @@ from source.classes.MutableTuple import MutableTuple
 from source.classes.MyHeap import MyHeap
 
 
-''' 
-
-The DB structure of the CarDatabase. 
+''' The DB structure of the CarDatabase. 
                                          
    __car_names       __car_accel       __car_speed       __car_handl   
 ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐ ┌───────┬───────┐
@@ -19,8 +17,6 @@ The DB structure of the CarDatabase.
 ┌───────┐                                                              
 │  car  │ __cars  = [car instance]                                                
 └───────┘                                                                                                 
-
-
 '''
 
 
@@ -49,6 +45,7 @@ class CarDatabase:
         self.__sort_all_arrays()
 
     def __add_car(self, name, accel, speed, handl):
+        # Create a new car for a reference
         car = Automobile()
         # Create a tuple for each atribute
         name_tuple = MutableTuple(car, name)
@@ -116,7 +113,11 @@ class CarDatabase:
             agregated = agregate_func(car, a, s, h)
             results.append(MutableTuple(car, agregated))
         results.sort(reverse=True)
-        return results[:form_values.get('quantity', type=int, default=10)]
+        quantity = form_values.get('quantity', type=int, default=10)
+        if quantity != 0:
+            return results[:quantity]
+        else:
+            return results
 
     @timed
     def top_k_treshold(self, form_values, agregate_func):
@@ -136,6 +137,7 @@ class CarDatabase:
         h = 'handl' in form_values.getlist('sort')
 
         for i in range(0, len(self.__cars)):
+            # Get the cars from the current row
             first_accel = self.__car_accel[i]
             first_speed = self.__car_speed[i]
             first_handl = self.__car_handl[i]

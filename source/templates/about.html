@@ -1,16 +1,31 @@
 {% extends "baser.html" %}
 
 {% block main %}
-    <p>
+    <h2>About</h2>
         This project was developed as a semestral assignment for the BI-VMW subject at the FIT CTU.
-    </p>
 
-    <p>
+    <h2>Structure</h2>
         The data is stored in 3 arrays each containing a KeyValue pair (car, value).
         Each array is sorted when the server starts.
-    </p>
-    <img style="display: block; width: 100%" src="{{ url_for('static',filename='images/db_structure.png') }}">
-    <p>
+
+    <img style="display: block; width: 70%; padding: 5px;" src="{{ url_for('static',filename='images/db_structure.png') }}">
+
+    <h2>Algorithms</h2>
+    <h3>aggregation function</h3>
         I have implemented 2 functions to get the best items based on the parameters selected by the checkbox.
-    </p>
+        <h4>sum</h4>
+            This function sums all the selected parameters.
+        <h4>max</h4>
+        This function selects the highest value among selected parameters.
+    <h3>query function</h3>
+        Query functions return the elements from my database.
+        <h4>naive</h4>
+            <li>Compute overall score for every object by looking into each sorted list.</li>
+            <li>Return k objects with the highest overall score.</li>
+        <h4>top-k treshold</h4>
+            <li>Set the threshold t to be the aggregate of the scores seen in this access.</li>
+            <li>Do random accesses and compute the scores of the seen objects.</li>
+            <li>Maintain a list of top-k objects seen so far.</li>
+            <li>Stop, when the scores of the top-k are greater or equal to the threshold.</li>
+            <li>Return the top-k seen so far.</li>
 {% endblock %}

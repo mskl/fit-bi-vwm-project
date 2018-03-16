@@ -2,11 +2,13 @@ from flask import Flask, render_template
 from source.classes.CarDatabase import CarDatabase
 from source.algorithms import *
 
+# Paths to the DATASET csv files
+dataset_paths = {"NFS": "source/data/cars_nsf.csv",
+                 "random": "source/data/cars_random.csv",
+                 "wordlist": "source/data/czech_wordlist_randoms.csv"}
+current_dataset = "NFS"
 
-dataset_paths = {"NFS": "data/cars_nsf.csv",
-                 "random": "data/cars_random.csv",
-                 "wordlist": "data/czech_wordlist_randoms.csv"}
-
+# The flask application
 app = Flask(__name__)
 car_database = CarDatabase(dataset_paths["NFS"])
 
@@ -34,15 +36,16 @@ def about():
 
 @app.route('/settings', methods=['GET'])
 def settings():
-    payload = "Which dataset would you like to select?"
-    dataset_get = request.args.get('dataset')
+    global current_dataset
+    payload = "Current datset is %s. Which dataset would you like to select?" % current_dataset
+    new_dataset = request.args.get('dataset')
 
-    if dataset_get is not None:
-        print(dataset_paths[dataset_get])
-        car_database.set_database(dataset_paths[dataset_get])
-        payload = "Setting the dataset to %s" % dataset_get
+    if new_dataset is not None:
+        current_dataset = new_dataset
+        car_database.set_database(dataset_paths[new_dataset])
+        payload = "Setting the dataset to %s" % new_dataset
 
-    return render_template("settings.html", payload=payload, dataset=dataset_get,  title='Settings')
+    return render_template("settings.html", payload=payload, dataset=new_dataset,  title='Settings')
 
 
 @app.errorhandler(404)
