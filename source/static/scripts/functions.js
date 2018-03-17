@@ -1,4 +1,4 @@
-// this function makes sure that at least one checkbox is checked before sending the form
+// This function makes sure that at least one checkbox is checked before sending the form
 function validateform() {
     var checkboxes = document.getElementsByName("sort");
     var okay = false;
@@ -16,3 +16,12 @@ function validateform() {
         return false;
     }
 }
+
+// Animate the bars using JQuery
+$(function(){
+     $(".product_percentage").each(function(){
+        var length = $(this).find("span").html();
+        $(this)[0].style.width = "0%";
+        $(this).animate({ width: length.replace(/\s/g,'') }, 1000);
+    });
+});
