@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from source.classes.CarDatabase import CarDatabase
-from source.algorithms import *
+from source.utils.algorithms import *
 
 # Paths to the DATASET csv files
 dataset_paths = {"NFS": "source/data/cars_nsf.csv",

@@ -21,30 +21,36 @@
 
 #header {
 	text-align: center;
-	padding-bottom: 0.5em;
+	padding-bottom: 0em;
 }
 
 #main {
-	border: 5px #72768a;
+
 }
 
 #footer {
 	color: #999;
 	margin-top: 1em;
-	border-top: 1px solid #72768a;
+	border-top: 2px solid #CCCCCC;
 }
 
 #headertext {
-	font-size: 1.5vw;
-	color: #000000;
+	font-size: 1.6vW;
+}
+
+#headertext h1 {
+	padding-bottom: 0;
+	margin-bottom: 0px;
+	color: white;
+	text-shadow: -1px -1px 5px #000000;
 }
 
 #navbar {
 	text-align: left;
 	display: block;
 	font-size: large;
-	padding: 0.6em;
-	border-top: 1px solid #CCCCCC;
+	padding: 0.5em;
+	border-top: 2px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 }
 
@@ -71,13 +77,6 @@ h3:after
     border:1px solid #d6d6d6;
 }
 
-.line {
-	border-bottom: 1px dotted #CCCCCC;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	display: block;
-}
-
 p {
 	text-align: justify;
 	clear: both;
@@ -96,7 +95,7 @@ p {
 .product_table thead td {
 	border-bottom: 5px solid #eeeeee;
 	padding: 4px 7px 4px 7px;
-	background-color: rgb(240, 255, 16);
+	background-color: rgb(254, 255, 36);
 }
 
 .product_table tbody tr:nth-child(odd) {

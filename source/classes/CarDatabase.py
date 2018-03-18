@@ -1,5 +1,5 @@
 import csv
-from source.algorithms import *
+from source.utils.algorithms import *
 from source.classes.Automobile import Automobile
 from source.classes.MutableTuple import MutableTuple
 from source.classes.MyHeap import MyHeap
@@ -165,7 +165,7 @@ class CarDatabase:
         return results[:quantity]
 
     @timed
-    def top_k_treshold(self, form_values, agregate_func):
+    def top_k_treshold(self, form_values, agregate_func, srtd=True):
         # 1. Set the threshold t to be the aggregate of the scores seen in this access.
         # 2. Do random accesses and compute the scores of the seen objects.
         # 3. Maintain a list of top-k objects seen so far
@@ -195,16 +195,16 @@ class CarDatabase:
             # Compute score of seen objects
             if first_accel.key() not in seen:
                 seen.add(first_accel.key())
-                fa = agregate_func(first_accel, a, s, h)
-                my_heap.add_element(first_accel, fa)
+                my_heap.add_element(first_accel, agregate_func(first_accel, a, s, h))
             if first_speed.key() not in seen:
                 seen.add(first_speed.key())
-                fs = agregate_func(first_speed, a, s, h)
-                my_heap.add_element(first_speed, fs)
+                my_heap.add_element(first_speed, agregate_func(first_speed, a, s, h))
             if first_handl.key() not in seen:
                 seen.add(first_handl.key())
-                fh = agregate_func(first_handl, a, s, h)
-                my_heap.add_element(first_handl, fh)
+                my_heap.add_element(first_handl, agregate_func(first_handl, a, s, h))
 
-        return my_heap.get_sorted_elements()
+        if srtd:
+            return my_heap.get_sorted_elements()
+        else:
+            return my_heap.get_unsorted_heap()
 
