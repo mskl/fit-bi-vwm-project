@@ -144,3 +144,17 @@ img {
     width: 70%;
 	padding: 5px;
 }
+
+.image_left, .image_right {
+	width: 50%;
+	padding: 0;
+	margin: 0;
+}
+
+.image_left {
+	float: left;
+}
+
+.image_right {
+	float: right;
+}

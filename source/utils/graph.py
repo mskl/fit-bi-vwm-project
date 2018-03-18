@@ -6,14 +6,14 @@ from source.classes.CarDatabase import CarDatabase
 from source.utils.algorithms import *
 
 if __name__ == "__main__":
-    car_database = CarDatabase("data/cars_random.csv")
+    car_database = CarDatabase("data/czech_wordlist_randoms.csv")
 
     array_x = []
     array_y_naive = []
     array_y_topk = []
     array_y_fagin = []
 
-    for i in range(1, 7000, 10):
+    for i in range(1, 7000, 500):
         print(i)
         settings = MultiDict([('sort', 'accel'), ('sort', 'speed'), ('sort', 'handl'), ('quantity', i)])
 

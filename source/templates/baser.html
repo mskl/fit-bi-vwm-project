@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-16" />
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
         <script type="text/javascript" src="{{url_for('static', filename='scripts/jquery-3.3.1.min.js')}}"></script>
         <script type="text/javascript" src="{{url_for('static', filename='scripts/functions.js')}}"></script>
@@ -44,10 +44,8 @@
             <!-- FOOTER ----------------------------------------------------------------------------------------------->
             <div id="footer">
                 {% block footer %}
-                    <p>
-                        This app was created by <a href="http://www.stoked.cz/">Matyáš Skalický</a> in 2018 as a semestral
-                        project for the <a href="https://fit.cvut.cz/predmety/bi-vwm">BI-VMW</a> subject
-                    </p>
+                    <p> This app was created by <a href="http://www.stoked.cz/">Matyáš Skalický</a> in 2018 as a semestral
+                        project for the <a href="https://fit.cvut.cz/predmety/bi-vwm">BI-VMW</a> subject. </p>
                 {% endblock %}
             </div>
         </div>
