@@ -43,3 +43,28 @@ def get_agregate_function(form_data):
         return agregate_max_func
     else:
         return agregate_sum_func
+
+
+# Check if the key was seen in all sets
+def seen_in_all_func(key, set_a, set_s, set_h, a, s, h):
+    if a and (not key in set_a):
+        return False
+    elif s and (not key in set_s):
+        return False
+    elif h and (not key in set_h):
+        return False
+    else:
+        return True
+
+
+# Parse the MultiDict from the form and return a s h
+def get_ash_from_form_values(form_values):
+    a = 'accel' in form_values.getlist('sort')
+    s = 'speed' in form_values.getlist('sort')
+    h = 'handl' in form_values.getlist('sort')
+    return a, s, h
+
+
+# Parse the MultiDict from the form and return the quantity
+def get_quantity_from_form_values(form_values):
+    return form_values.get('quantity', default=10, type=int)

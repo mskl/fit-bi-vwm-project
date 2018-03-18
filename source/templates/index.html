@@ -13,10 +13,11 @@
                         </select>
                         <select name="algorithm" title="query algorithm">
                             <option value="naive" {% if request.args.get('algorithm') == "naive" or None %}selected{% endif %}>naive</option>
+                            <option value="fagin" {% if request.args.get('algorithm') == "fagin" %}selected{% endif %}>fagin</option>
                             <option value="treshold" {% if request.args.get('algorithm') == "treshold" %}selected{% endif %}>treshold</option>
                         </select>
                         <!-- Quantity and submit button -->
-                        <input type="number" name="quantity" min="0" max="20" value="{{ request.args.get('quantity') or 10 }}" title="query size">
+                        <input type="number" name="quantity" min="0" max="20" value="{{ request.args.get('quantity') or 15 }}" title="query size">
                         <input type="submit" value="submit" title="submit the query">
                     </td>
                     <!-- Checkboxes for sorting based on individual/combined attributes -->

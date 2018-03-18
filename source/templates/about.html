@@ -7,8 +7,7 @@
     <h2>Structure</h2>
         The data is stored in 3 arrays each containing a KeyValue pair (car, value).
         Each array is sorted when the server starts.
-
-    <img style="display: block; width: 70%; padding: 5px;" src="{{ url_for('static',filename='images/db_structure.png') }}">
+        <img src="{{ url_for('static',filename='images/db_structure.png') }}">
 
     <h2>Algorithms</h2>
     <h3>aggregation function</h3>
@@ -28,4 +27,12 @@
             <li>Maintain a list of top-k objects seen so far.</li>
             <li>Stop, when the scores of the top-k are greater or equal to the threshold.</li>
             <li>Return the top-k seen so far.</li>
+    <h3>Speed comparison</h3>
+        These are the results on the dataset containing about 7000 elements. The y axis represents query time and the x axis
+        the size of the query. The <b>top-k</b> algorithm is faster for the query of the size lower than the half of the dataset.
+        The <b>naive</b> algorithm just sorts the array so when querying more than half of the database it outperforms the
+        top-k algorithm that starts to work like a heap sort but with added overhang. The test was run with a sum function
+        using all 3 parameters.
+        <img style="display: block; width: 70%; padding: 5px;" src="{{ url_for('static',filename='images/graphs/7k_smooth.png') }}">
+
 {% endblock %}

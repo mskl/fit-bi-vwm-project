@@ -91,7 +91,8 @@ class CarDatabase:
     def get_handl(self):
         return self.__car_handl
 
-    def __get_treshold(self, a, s, h, aval, sval, hval):
+    @staticmethod
+    def __get_treshold(a, s, h, aval, sval, hval):
         treshold = 0
         if a:
             treshold += aval
@@ -106,18 +107,62 @@ class CarDatabase:
         # 1. Compute overall score for every object by looking into each sorted list.
         # 2. Return k objects with the highest overall score.
         results = []
-        a = 'accel' in form_values.getlist('sort')
-        s = 'speed' in form_values.getlist('sort')
-        h = 'handl' in form_values.getlist('sort')
+        a, s, h = get_ash_from_form_values(form_values)
+        quantity = get_quantity_from_form_values(form_values)
         for car in self.__cars:
             agregated = agregate_func(car, a, s, h)
             results.append(MutableTuple(car, agregated))
         results.sort(reverse=True)
-        quantity = form_values.get('quantity', type=int, default=10)
         if quantity != 0:
             return results[:quantity]
         else:
             return results
+
+    @timed
+    def top_k_fagin(self, form_values, agregate_func):
+        # 1. Sequentially access all the sorted lists in parallel until there are k objects
+        #       that have been seen in all lists.
+        # 2. Perform random accesses to obtain the scores of all seen objects
+        # 3. Compute score for all objects and return the top-k
+
+        # Keep the sets of objects
+        seen_a = set()
+        seen_s = set()
+        seen_h = set()
+        seen_in_all = set()
+
+        # Parse the values from the form
+        quantity = get_quantity_from_form_values(form_values)
+        a, s, h = get_ash_from_form_values(form_values)
+
+        # Iterate all sorted lists in parallel
+        for i in range(0, len(self.__cars)):
+            if a:
+                seen_a.add(self.__car_accel[i].key())
+                if seen_in_all_func(self.__car_accel[i].key(), seen_a, seen_s, seen_h, a, s, h):
+                    seen_in_all.add(self.__car_accel[i].key())
+            if s:
+                seen_s.add(self.__car_speed[i].key())
+                if seen_in_all_func(self.__car_speed[i].key(), seen_a, seen_s, seen_h, a, s, h):
+                    seen_in_all.add(self.__car_speed[i].key())
+            if h:
+                seen_h.add(self.__car_handl[i].key())
+                if seen_in_all_func(self.__car_handl[i].key(), seen_a, seen_s, seen_h, a, s, h):
+                    seen_in_all.add(self.__car_handl[i].key())
+
+            # If seen enough objects break and compute the scores
+            if len(seen_in_all) >= quantity:
+                break
+
+        # Compute the results
+        results = []
+        for car in seen_in_all:
+            agregated = agregate_func(car, a, s, h)
+            results.append(MutableTuple(car, agregated))
+
+        # Sort the results and return
+        results.sort(reverse=True)
+        return results[:quantity]
 
     @timed
     def top_k_treshold(self, form_values, agregate_func):
@@ -128,13 +173,11 @@ class CarDatabase:
         # end. Return the top-k seen so far
 
         # Heap contains <agregate_value, car>
-        my_heap = MyHeap(form_values.get('quantity', default=10, type=int))
+        my_heap = MyHeap(get_quantity_from_form_values(form_values))
 
         # Set of the objects that i've explored
         seen = set()
-        a = 'accel' in form_values.getlist('sort')
-        s = 'speed' in form_values.getlist('sort')
-        h = 'handl' in form_values.getlist('sort')
+        a, s, h = get_ash_from_form_values(form_values)
 
         for i in range(0, len(self.__cars)):
             # Get the cars from the current row

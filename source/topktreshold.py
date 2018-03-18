@@ -23,6 +23,10 @@ def index():
         db, q_time = car_database.top_k_treshold(request.values, agregate_func)
         return render_template("index.html", title='Index - treshold top-k',
                                database=db, querytime=q_time)
+    elif request.values.get('algorithm') == "fagin":
+        db, q_time = car_database.top_k_fagin(request.values, agregate_func)
+        return render_template("index.html", title='Index - fagin\'s algoritm',
+                               database=db, querytime=q_time)
     else:
         db, q_time = car_database.top_k_naive(request.values, agregate_func)
         return render_template("index.html", title='Index - treshold naive-k',
