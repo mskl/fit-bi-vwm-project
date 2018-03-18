@@ -1,6 +1,7 @@
 from source.classes.MyHeap import MyHeap
 import unittest
 
+
 class MyHeapTest(unittest.TestCase):
     def test_basic(self):
         h = MyHeap(3)
@@ -34,6 +35,7 @@ class MyHeapTest(unittest.TestCase):
 def run_test():
     suite = unittest.TestLoader().loadTestsFromTestCase(MyHeapTest)
     unittest.TextTestRunner(verbosity=2).run(suite)
+
 
 # Run all the testing if ran from this file
 if __name__ == '__main__':

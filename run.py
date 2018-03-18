@@ -1,5 +1,9 @@
 from source.topktreshold import app
-import socket
+from source.tests.MyHeapTest import run_test
+import sys
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    if len(sys.argv) >= 2:
+        if sys.argv[1] == "DEBUG":
+            app.run(debug=True)
+    app.run()

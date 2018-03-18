@@ -42,8 +42,8 @@
 #headertext h1 {
 	padding-bottom: 0;
 	margin-bottom: 0px;
-	color: white;
-	text-shadow: -1px -1px 5px #000000;
+	color: #1df0c6;
+	text-shadow: -2px -2px 0px #000000;
 }
 
 #navbar {
@@ -83,6 +83,14 @@ p {
 	clear: both;
 }
 
+a {
+	color: #f01d9c;
+}
+
+a:after {
+	color: #f01d9c;
+}
+
 .product_table {
 	width: 100%;
 	border-collapse:collapse;
@@ -96,7 +104,7 @@ p {
 .product_table thead td {
 	border-bottom: 5px solid #eeeeee;
 	padding: 4px 7px 4px 7px;
-	background-color: rgb(254, 255, 36);
+	background-color: rgba(240, 43, 55, 0.6);
 }
 
 .product_table tbody tr:nth-child(odd) {
@@ -115,7 +123,7 @@ p {
 .product_percentage {
 	display: inline-block;
 	height: 100%;
-	background-color: rgba(255, 7, 173, 0.6);
+	background-color: rgba(156, 240, 29, 0.7);
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
@@ -139,8 +147,6 @@ h4 {
 
 img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     width: 70%;
 	padding: 5px;
 }
@@ -157,4 +163,8 @@ img {
 
 .image_right {
 	float: right;
+}
+
+figure {
+	margin: 5px 0 0 0;
 }

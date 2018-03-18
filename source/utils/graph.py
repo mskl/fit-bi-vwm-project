@@ -13,7 +13,7 @@ if __name__ == "__main__":
     array_y_topk = []
     array_y_fagin = []
 
-    for i in range(1, 7000, 500):
+    for i in range(1, 160000, 5000):
         print(i)
         settings = MultiDict([('sort', 'accel'), ('sort', 'speed'), ('sort', 'handl'), ('quantity', i)])
 
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     ax.plot(array_x, poly_naive_y, label="naive")
     ax.plot(array_x, poly_topk_y, label="top-k")
     ax.plot(array_x, poly_fagin_y, label="fagin")
-
+    fig.tight_layout()
     # Now add the legend with some customizations.
     legend = ax.legend(loc='upper center', shadow=True)
 
