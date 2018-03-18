@@ -4,6 +4,7 @@
 #wholeweb {
 	background-color: #FFF;
 	display: block;
+	min-width: 620px;
 	width: 60%;
 	height: 80%;
 	margin: 50px auto 0;
@@ -21,7 +22,7 @@
 
 #header {
 	text-align: center;
-	padding-bottom: 0em;
+	padding-bottom: 0;
 }
 
 #main {
@@ -35,7 +36,7 @@
 }
 
 #headertext {
-	font-size: 1.6vW;
+	font-size: 1.6vw;
 }
 
 #headertext h1 {

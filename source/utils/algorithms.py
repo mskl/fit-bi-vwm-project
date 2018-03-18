@@ -67,4 +67,4 @@ def get_ash_from_form_values(form_values):
 
 # Parse the MultiDict from the form and return the quantity
 def get_quantity_from_form_values(form_values):
-    return form_values.get('quantity', default=10, type=int)
+    return form_values.get('quantity', default=15, type=int)
