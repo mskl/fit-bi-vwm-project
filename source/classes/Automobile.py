@@ -24,7 +24,7 @@ class Automobile:
     def get_handl_value(self):
         return self.handl.value()
 
-    # A hack to make itself compatible with the MutableTuple
+    # A hack to make same interface as MutableTuple
     def key(self):
         return self
 

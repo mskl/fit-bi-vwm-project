@@ -1,5 +1,4 @@
 from source.topktreshold import app
-from source.tests.MyHeapTest import run_test
 import sys
 
 if __name__ == "__main__":
