@@ -13,7 +13,7 @@ class MutableTuple:
     def value(self):
         return self.__value
 
-    # Comparision operator !!! Based on the value
+    # Comparision operator !!! Based on the value not the key
     def __lt__(self, other):
         return self.value() < other.value()
 
