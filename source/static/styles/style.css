@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-#wholeweb {
+#whole_web {
 	background-color: #FFF;
 	display: block;
 	min-width: 620px;
@@ -55,7 +55,7 @@
 	border-bottom: 1px solid #CCCCCC;
 }
 
-.navbarbutton {
+.navbar_button {
 	display: inline-block;
 	padding: 0 5px 0 5px;
 }

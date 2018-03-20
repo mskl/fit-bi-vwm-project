@@ -3,7 +3,7 @@ import time
 
 
 # Sum of all attributes specified in the checkbox dict
-def agregate_sum_func(car, _a, _s, _h):
+def aggregate_sum_func(car, _a, _s, _h):
     soucet = 0
     if _a:
         soucet += car.key().get_accel_value()
@@ -15,7 +15,7 @@ def agregate_sum_func(car, _a, _s, _h):
 
 
 # Max among all attributes in the checkbox dict
-def agregate_max_func(car, _a, _s, _h):
+def aggregate_max_func(car, _a, _s, _h):
     maximum = 0
     if _a:
         maximum = max(maximum, car.key().get_accel_value())
@@ -32,26 +32,26 @@ def timed(func):
         start = time.time()
         result = func(*args, **kwargs)
         q_time = time.time() - start
-        return result, q_time
+        return result, q_time   # Q-time will be the last element
     return wrapper
 
 
-# Get the agregate function from the form values data (GET or POST)
-def get_agregate_function(form_data):
-    # Process the agregate function from the get
+# Get the aggregate function from the form values data (GET or POST)
+def get_aggregate_function(form_data):
+    # Process the aggregate function from the get
     if form_data.get('agregate') == "max":
-        return agregate_max_func
+        return aggregate_max_func
     else:
-        return agregate_sum_func
+        return aggregate_sum_func
 
 
 # Check if the key was seen in all sets
 def seen_in_all_func(key, set_a, set_s, set_h, a, s, h):
-    if a and (not key in set_a):
+    if a and (key not in set_a):
         return False
-    elif s and (not key in set_s):
+    elif s and (key not in set_s):
         return False
-    elif h and (not key in set_h):
+    elif h and (key not in set_h):
         return False
     else:
         return True

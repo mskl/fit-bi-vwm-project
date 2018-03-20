@@ -16,21 +16,21 @@ car_database = CarDatabase(dataset_paths["NFS"])
 @app.route('/', methods=['GET'])
 def index():
     # Obtain the pointer to an agregate function based on the GET/POST
-    agregate_func = get_agregate_function(request.values)
+    aggregate_func = get_aggregate_function(request.values)
 
     # Return the correct database and template
     if request.values.get('algorithm') == "treshold":
-        db, q_time = car_database.top_k_treshold(request.values, agregate_func)
+        (db, access_count), q_time = car_database.top_k_treshold(request.values, aggregate_func)
         return render_template("index.html", title='Index - treshold top-k',
-                               database=db, querytime=q_time)
+                               database=db, querytime=q_time, access_count=access_count)
     elif request.values.get('algorithm') == "fagin":
-        db, q_time = car_database.top_k_fagin(request.values, agregate_func)
+        (db, access_count), q_time = car_database.top_k_fagin(request.values, aggregate_func)
         return render_template("index.html", title='Index - fagin\'s algoritm',
-                               database=db, querytime=q_time)
+                               database=db, querytime=q_time, access_count=access_count)
     else:
-        db, q_time = car_database.top_k_naive(request.values, agregate_func)
+        (db, access_count), q_time = car_database.top_k_naive(request.values, aggregate_func)
         return render_template("index.html", title='Index - treshold naive-k',
-                               database=db, querytime=q_time)
+                                database=db, querytime=q_time, access_count=access_count)
 
 
 @app.route('/about')

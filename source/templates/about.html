@@ -28,7 +28,13 @@
             <h4>max</h4>
                 This function selects the highest value among selected parameters. This is the same as doing average of the
                 elements since the ratings are normalised.
-        <h3>Speed comparison</h3>
+        <h3>speed comparison (number of accesses to the DB)</h3>
+            The top-k does clearly the least number of random accesses to the DB.
+            <figure>
+                <img style="width: 50%" src="{{ url_for('static',filename='images/graphs/7k_accesses.png') }}", alt="number of random accesses">
+                <figcaption>Number of accesses to the DB on dataset containing 7 000 items.</figcaption>
+            </figure>
+        <h3>speed comparison (time spent running)</h3>
             These are the results on the dataset containing about 7000 elements. The y axis represents query time and the x axis
             the size of the query. The <b>top-k</b> algorithm is faster for the query of the size lower than the half of the dataset.
             <b>Fagin's</b> algorithm outperforms the top-k on the dataset presented.

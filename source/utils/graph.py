@@ -6,24 +6,24 @@ from source.classes.CarDatabase import CarDatabase
 from source.utils.algorithms import *
 
 if __name__ == "__main__":
-    car_database = CarDatabase("data/czech_wordlist_randoms.csv")
+    car_database = CarDatabase("data/cars_random.csv")
 
     array_x = []
     array_y_naive = []
     array_y_topk = []
     array_y_fagin = []
 
-    for i in range(1, 160000, 5000):
+    for i in range(1, 7000, 50):
         print(i)
         settings = MultiDict([('sort', 'accel'), ('sort', 'speed'), ('sort', 'handl'), ('quantity', i)])
 
         array_x.append(i)
-        db_k, q_time_k = car_database.top_k_treshold(settings, agregate_sum_func)
-        db_n, q_time_n = car_database.top_k_naive(settings, agregate_sum_func)
-        db_f, q_time_f = car_database.top_k_fagin(settings, agregate_sum_func)
-        array_y_naive.append(q_time_n)
-        array_y_topk.append(q_time_k)
-        array_y_fagin.append(q_time_f)
+        (db_k, acces_count_k),q_time_k = car_database.top_k_treshold(settings, aggregate_sum_func)
+        (db_n, acces_count_n),q_time_n = car_database.top_k_naive(settings, aggregate_sum_func)
+        (db_f, acces_count_f),q_time_f = car_database.top_k_fagin(settings, aggregate_sum_func)
+        array_y_naive.append(acces_count_n)
+        array_y_topk.append(acces_count_k)
+        array_y_fagin.append(acces_count_f)
 
     poly_naive = np.polyfit(array_x, array_y_naive, 1)
     poly_naive_y = np.poly1d(poly_naive)(array_x)

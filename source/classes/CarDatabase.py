@@ -106,20 +106,25 @@ class CarDatabase:
     def top_k_naive(self, form_values, agregate_func):
         # 1. Compute overall score for every object by looking into each sorted list.
         # 2. Return k objects with the highest overall score.
+
+        # Count the number of random accesses
+        access_count = 0
+
         results = []
         a, s, h = get_ash_from_form_values(form_values)
         quantity = get_quantity_from_form_values(form_values)
         for car in self.__cars:
+            access_count += 1
             agregated = agregate_func(car, a, s, h)
             results.append(MutableTuple(car, agregated))
         results.sort(reverse=True)
         if quantity != 0:
-            return results[:quantity]
+            return (results[:quantity], access_count)
         else:
-            return results
+            return (results, access_count)
 
     @timed
-    def top_k_fagin(self, form_values, agregate_func):
+    def top_k_fagin(self, form_values, aggregate_func):
         # 1. Sequentially access all the sorted lists in parallel until there are k objects
         #       that have been seen in all lists.
         # 2. Perform random accesses to obtain the scores of all seen objects
@@ -131,12 +136,16 @@ class CarDatabase:
         seen_h = set()
         seen_in_all = set()
 
+        # Count the number of random accesses
+        access_count = 0
+
         # Parse the values from the form
         quantity = get_quantity_from_form_values(form_values)
         a, s, h = get_ash_from_form_values(form_values)
 
         # Iterate all sorted lists in parallel
         for i in range(0, len(self.__cars)):
+            access_count += 1
             if a:
                 seen_a.add(self.__car_accel[i].key())
                 if seen_in_all_func(self.__car_accel[i].key(), seen_a, seen_s, seen_h, a, s, h):
@@ -157,12 +166,12 @@ class CarDatabase:
         # Compute the results
         results = []
         for car in seen_in_all:
-            agregated = agregate_func(car, a, s, h)
-            results.append(MutableTuple(car, agregated))
+            aggregated = aggregate_func(car, a, s, h)
+            results.append(MutableTuple(car, aggregated))
 
         # Sort the results and return
         results.sort(reverse=True)
-        return results[:quantity]
+        return results[:quantity], access_count
 
     @timed
     def top_k_treshold(self, form_values, agregate_func, srtd=True):
@@ -175,11 +184,16 @@ class CarDatabase:
         # Heap contains <agregate_value, car>
         my_heap = MyHeap(get_quantity_from_form_values(form_values))
 
+        # Count the number of random accesses
+        access_count = 0
+
         # Set of the objects that i've explored
         seen = set()
         a, s, h = get_ash_from_form_values(form_values)
 
         for i in range(0, len(self.__cars)):
+            access_count += 1
+
             # Get the cars from the current row
             first_accel = self.__car_accel[i]
             first_speed = self.__car_speed[i]
@@ -204,7 +218,7 @@ class CarDatabase:
                 my_heap.add_element(first_handl, agregate_func(first_handl, a, s, h))
 
         if srtd:
-            return my_heap.get_sorted_elements()
+            return my_heap.get_sorted_elements(), access_count
         else:
-            return my_heap.get_unsorted_heap()
+            return my_heap.get_unsorted_heap(), access_count
 
