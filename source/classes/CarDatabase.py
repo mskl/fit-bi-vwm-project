@@ -47,7 +47,7 @@ class CarDatabase:
     def __add_car(self, name, accel, speed, handl):
         # Create a new car for a reference
         car = Automobile()
-        # Create a tuple for each atribute
+        # Create a tuple for each attribute
         name_tuple = MutableTuple(car, name)
         accel_tuple = MutableTuple(car, speed)
         speed_tuple = MutableTuple(car, accel)
