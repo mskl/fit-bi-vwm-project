@@ -15,7 +15,7 @@ car_database = CarDatabase(dataset_paths["NFS"])
 
 @app.route('/', methods=['GET'])
 def index():
-    # Obtain the pointer to an agregate function based on the GET/POST
+    # Obtain the pointer to an aggregate function based on the GET/POST
     aggregate_func = get_aggregate_function(request.values)
 
     # Return the correct database and template
