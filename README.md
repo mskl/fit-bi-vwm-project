@@ -1,7 +1,4 @@
 # fit-bi-vmw-semestralka
-Semestral project for the BI-VMW subject at the FIT CTU.
-
-# About
 This project was developed as a semestral assignment for the BI-VMW subject at the FIT CTU.
 
 ## Algorithms
